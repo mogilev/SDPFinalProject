@@ -1,6 +1,6 @@
-package ual.sdp.app.views;
+package app.views;
 
-import ual.sdp.app.models.Data;
+import app.models.Data;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -13,12 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/items/*")
-public class RESTAPI extends HttpServlet {
+public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json"); // TODO: 1/11/2021
+        if req.getHeader().equals('/items/stock'){
 
+            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+            jsonBuilder.add("pedido", "Items em Stock");
+            jsonBuilder.add("value", 0);
+
+            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+            jsonWriter.writeObject(jsonBuilder.build());
+            jsonWriter.close();
+
+        }
+        else {
         Data data = new Data("doGet", 42.0);
 
         JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
@@ -28,6 +39,7 @@ public class RESTAPI extends HttpServlet {
         JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
         jsonWriter.writeObject(jsonBuilder.build());
         jsonWriter.close();
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ual.sdp.app.models;
+package app.models;
 
 
 public class Data {
