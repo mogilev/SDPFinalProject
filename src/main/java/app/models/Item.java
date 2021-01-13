@@ -13,4 +13,8 @@ public interface Item {
     public int getQuantity(); // Retorna quantidade em stock do Item
 
     public void setQuantity(int quantity);  // altera a quantidade do item
+
+    public void setId(String id_item);
+
+     public void setName(String name_item);
 }
