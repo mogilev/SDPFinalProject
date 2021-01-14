@@ -24,6 +24,23 @@ public class ItemServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json"); // TODO: 1/11/2021
+        String urInfo = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        String servletPath = req.getServletPath();
+        String pathInfo = req.getPathInfo();
+
+        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+        jsonBuilder.add("urInfo", urInfo);
+        jsonBuilder.add("contextPath", contextPath);
+        jsonBuilder.add("servletPath", servletPath);
+        jsonBuilder.add("pathInfo", pathInfo);
+
+        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+        jsonWriter.writeObject(jsonBuilder.build());
+        jsonWriter.close();
+
+
+/*        resp.setContentType("application/json"); // TODO: 1/11/2021
         DatabaseConnectionManager dcm = new DatabaseConnectionManager("sdp_db:5432",
                 "amv_transports", "postgres", "sdp");
         try{
@@ -42,7 +59,7 @@ public class ItemServlet extends HttpServlet {
             }
         }catch(SQLException e){
             e.printStackTrace();
-        }
+        }*/
 
 
 //        if req.getHeader().equals('/items/stock'){
