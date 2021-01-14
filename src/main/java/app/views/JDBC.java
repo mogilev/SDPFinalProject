@@ -37,7 +37,7 @@ public class JDBC {
                 item.setId(resultSet.getString("id_item")); // TODO: fazer o parce para inteiro
                 item.setName(resultSet.getString("name_item"));
                 item.setDescription(resultSet.getString("description_item"));
-                item.setQuantity(resultSet.getString("quantity_item"); // TODO: fazer cast para inteiro
+            //    item.setQuantity(resultSet.getString("quantity_item")); // TODO: fazer cast para inteiro
                 items.add(item);
             }
             return items; // retorna a lista de instancias com todos os items da tabela items

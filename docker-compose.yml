@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  rest_api:
+    image: asabino/wildfly:21.0.2.Final-jdk15
+    working_dir: /app
+    volumes:
+      - ./target/:/app
+    ports:
+      - '8080:8080'
+      - '9990:9990'
+  sdp_db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sdp
+    ports:
+      - '5432:5432'
