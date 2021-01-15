@@ -2,9 +2,9 @@ package app.models;
 
 public class ItemClass implements Item {
     int id;
-    String name;
-    String description;
-    int quantity;
+    private String name;
+    private String description;
+    private int quantity;
 
     public ItemClass() {
         this.id = id;
@@ -16,12 +16,10 @@ public class ItemClass implements Item {
     public int getId() {
         return id;
     }
-    public void setId(String id_item) { this.id = id; }
 
     public String getName() {
         return name;
     }
-    public void setName(String name_item) { this.name = name; }
 
     public String getDescription() {
         return description;

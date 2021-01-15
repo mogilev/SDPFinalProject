@@ -1,0 +1,16 @@
+{"item 1" : [{"id_item": 1,"name_item": "Pastilha", "quantity_item": 15,"description_item": "sabor menta"}],
+  "item 2" : [{"id_item": 2,"name_item": "Chocolate", "quantity_item": 400,"description_item": "null"}],
+  "item 3" : [{"id_item": 3,"name_item": "Maçã", "quantity_item": 15,"description_item": "null"}],
+  "item 4" : [{"id_item": 4,"name_item": "Amaciador", "quantity_item": 40,"description_item": "null"}],
+  "item 5" : [{"id_item": 5,"name_item": "Lava-tudo", "quantity_item": 150,"description_item": "null"}],
+  "item 6" : [{"id_item": 6,"name_item": "Papel Higiénico", "quantity_item": 2,"description_item": "dupla folha"}],
+  "item 7" : [{"id_item": 7,"name_item": "Saco", "quantity_item": 0,"description_item": "opacos"}],
+  "item 8" : [{"id_item": 8,"name_item": "Caderno", "quantity_item": 15,"description_item": "quadriculado"}],
+  "item 9" : [{"id_item": 9,"name_item": "Café", "quantity_item": 15,"description_item": "null"}],
+  "item 10" : [{"id_item": 10,"name_item": "Chá", "quantity_item": 15,"description_item": "null"}],
+  "item 11" : [{"id_item": 11,"name_item": "Caneta", "quantity_item": 32,"description_item": "null"}],
+  "item 12" : [{"id_item": 12,"name_item": "Bronzeador", "quantity_item": 78,"description_item": "descrição hiper giganteeeeeeeeeeeee"}],
+  "item 13" : [{"id_item": 13,"name_item": "Água", "quantity_item": 465,"description_item": "null"}],
+  "item 14" : [{"id_item": 14,"name_item": "Aquecedor", "quantity_item": 12,"description_item": "1000W"}],
+  "item 15" : [{"id_item": 15,"name_item": "Álcool-Gel", "quantity_item": 0,"description_item": "null"}]
+}

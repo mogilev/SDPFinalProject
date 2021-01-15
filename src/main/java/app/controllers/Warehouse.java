@@ -1,11 +1,18 @@
 package app.controllers;
 
 
+import app.models.Delivery;
+import app.models.Deposit;
 import app.models.Item;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
+import java.util.List;
 
 public interface Warehouse {
 
-    void getItems(); // Retorna coleção de items existentes
+    void getItems(boolean bool); // Retorna coleção de items existentes
 
     void getStockItems(); // Retorna coleção de items cuja quantidade é >= 0
 
@@ -17,6 +24,24 @@ public interface Warehouse {
 
     void deleteItem(int i); // Elimina um determinado item, caso nunca tenha sido registado um depósito ou entrega com este.
 
-    // TODO
+    boolean itemExists(int itemId); // verifica se um item existe na base de dados
+
+
+    //  Listas
+
+    List<Item> getItemsList();
+
+    List<Deposit> getDepositsList();
+
+    List<Delivery> getDeliveriesList();
+
+
+    void buildItemsList(boolean bool);
+
+    //  Criação de Json's
+
+    JsonArrayBuilder jsonItemsCollectionSender();
+
+    JsonArrayBuilder jsonDeliveriesCollectionSender();
 
 }

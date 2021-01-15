@@ -1,7 +1,10 @@
 package app.views;
 
+import app.controllers.Warehouse;
+import app.controllers.WarehouseClass;
 import app.models.Data;
 import app.models.DatabaseConnectionManager;
+import app.models.Item;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -16,18 +19,38 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/items/*")
 public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Warehouse warehouse = new WarehouseClass();
+
+        String pathInfo = req.getPathInfo();
+
+        if (!isInteger(pathInfo)) {
+            switch (pathInfo) {
+                case "/":
+                    commandGetItemCollection(warehouse, resp, false); // consulta todos os items
+                    break;
+                case "/stock":
+                    commandGetItemCollection(warehouse, resp, true); // consulta items com stock
+                    break;
+            }
+        }
+        else{
+            int itemId = Integer.parseInt(pathInfo); // penso que não seja necessário consultar um item individualmente
+            commandGetItem(warehouse, resp, itemId);
+        }
+
 
         resp.setContentType("application/json"); // TODO: 1/11/2021
         String urInfo = req.getRequestURI();
         String contextPath = req.getContextPath();
         String servletPath = req.getServletPath();
-        String pathInfo = req.getPathInfo();
 
         JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
         jsonBuilder.add("urInfo", urInfo);
@@ -40,7 +63,7 @@ public class ItemServlet extends HttpServlet {
         jsonWriter.close();
 
 
-/*        resp.setContentType("application/json"); // TODO: 1/11/2021
+/*        resp.setContentType("application/json");
         DatabaseConnectionManager dcm = new DatabaseConnectionManager("sdp_db:5432",
                 "amv_transports", "postgres", "sdp");
         try{
@@ -61,29 +84,6 @@ public class ItemServlet extends HttpServlet {
             e.printStackTrace();
         }*/
 
-
-//        if req.getHeader().equals('/items/stock'){
-//
-//            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-//            jsonBuilder.add("pedido", "Items em Stock");
-//            jsonBuilder.add("value", 0);
-//
-//            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-//            jsonWriter.writeObject(jsonBuilder.build());
-//            jsonWriter.close();
-//
-//        }
-//        else {
-//        Data data = new Data("doGet", 42.0);
-//
-//        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-//        jsonBuilder.add("name", data.getName());
-//        jsonBuilder.add("value", data.getValue());
-//
-//        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-//        jsonWriter.writeObject(jsonBuilder.build());
-//        jsonWriter.close();
-//        }
     }
 
     @Override
@@ -130,4 +130,71 @@ public class ItemServlet extends HttpServlet {
         jsonWriter.writeObject(jsonBuilder.build());
         jsonWriter.close();
     }
+
+
+
+
+
+
+
+
+    public static boolean isInteger(String str) {
+        str = str.substring(1);
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+
+    private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean bool){
+       //     List<Item> itemsList = warehouse.getItems(bool); //TODO
+       //     jsonSender(itemsList);
+        warehouse.buildItemsList(bool);
+        if (warehouse.getItemsList().isEmpty()){
+            try {
+                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+                jsonBuilder.add("error", "no items found!");
+                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+                jsonWriter.writeObject(jsonBuilder.build());
+                jsonWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+                jsonWriter.writeArray(warehouse.jsonItemsCollectionSender().build());
+                jsonWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+    private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) { // TODO não parece ser necessário no enunciado, confirmar
+        if(!warehouse.itemExists(itemId)){
+            try {
+                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+                jsonBuilder.add(String.valueOf(itemId), "item not found!");
+                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+                jsonWriter.writeObject(jsonBuilder.build());
+                jsonWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+
+
+        }
+    }
+
+
 }

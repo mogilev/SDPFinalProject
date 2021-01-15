@@ -1,14 +1,28 @@
 package app.controllers;
 
-import app.models.Item;
+import app.models.*;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WarehouseClass implements Warehouse {
 
+    private List<Item> itemsList;
+    private List<Deposit> depositsList;
+    private List<Delivery> deliveriesList;
+
     public WarehouseClass() {
+        this.itemsList = new ArrayList<Item>();
+        this.depositsList = new ArrayList<Deposit>();
+        this.deliveriesList = new ArrayList<Delivery>();
     }
 
+
     @Override
-    public void getItems() {
+    public void getItems(boolean bool) {
 
     }
 
@@ -33,8 +47,74 @@ public class WarehouseClass implements Warehouse {
     }
 
     @Override
-    public void deleteItem(int i) {
+    public void deleteItem(int itemId) {
 
     } // TODO - aqui ficarão as regras de negócio (segundo o brainstorm na aula 05/01/2021 - 55min)
+
+    @Override
+    public boolean itemExists(int itemId) {
+        // DAO.daoItemExists todo Artur
+        return false;
+    }
+
+    @Override
+    public List<Item> getItemsList() {
+        return this.itemsList;
+    }
+
+    @Override
+    public List<Deposit> getDepositsList() {
+        return this.depositsList;
+    }
+
+    @Override
+    public List<Delivery> getDeliveriesList() {
+        return this.deliveriesList;
+    }
+
+    @Override
+    public void buildItemsList(boolean bool) {
+        if (bool){
+            // TODO Artur: necessário criar método no DAO(ou equivalente) que preencha this.itemsList só com items em stock
+            return;
+        }
+        else{
+            // TODO Artur: necessário criar método no DAO(ou equivalente) que preencha this.itemsList com todos os items
+            return;
+        }
+    }
+
+
+    @Override
+    public JsonArrayBuilder jsonItemsCollectionSender() {
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+        for (Item item : this.getItemsList()){
+            jsonBuilder.add("name", item.getDescription());
+            jsonBuilder.add("description", item.getDescription());
+            jsonBuilder.add("quantity", item.getDescription());
+            jsonArrayBuilder.add(jsonBuilder);
+        }
+        return jsonArrayBuilder;
+    }
+
+
+    @Override
+    public JsonArrayBuilder jsonDeliveriesCollectionSender() {
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+        for (Delivery delivery : this.getDeliveriesList()){
+            jsonBuilder.add("deliveryId", delivery.getDeliveryId());
+            jsonBuilder.add("description", delivery.getPlace());
+            for (DeliveryItems deliveryItems: delivery.getDeliveryItemsList()){
+                jsonBuilder.add("itemId", deliveryItems.getItem().getId());
+                jsonBuilder.add("itemId", deliveryItems.getItem().getName());
+                jsonBuilder.add("itemId", deliveryItems.getQuantity());
+            }
+            jsonArrayBuilder.add(jsonBuilder);
+        }
+        return jsonArrayBuilder;
+    }
+
 
 }
