@@ -21,9 +21,8 @@ public class ItemClass implements Item {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -31,6 +30,7 @@ public class ItemClass implements Item {
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

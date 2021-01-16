@@ -25,9 +25,7 @@ public class ItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Warehouse warehouse = new WarehouseClass();
-
         String pathInfo = req.getPathInfo();
-
 
  /*       ConnectionDAO cdao = new ConnectionDAO();
         try{
@@ -59,12 +57,10 @@ public class ItemServlet extends HttpServlet {
                     break;
             }
         }
-        else{
+        else {
             int itemId = Integer.parseInt(pathInfo); // penso que não seja necessário consultar um item individualmente
             commandGetItem(warehouse, resp, itemId);
         }
-
-
 
 /*
         // bloco de codigo de teste, antigo
@@ -82,7 +78,6 @@ public class ItemServlet extends HttpServlet {
         JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
         jsonWriter.writeObject(jsonBuilder.build());
         jsonWriter.close();*/
-
 
 /*        resp.setContentType("application/json"); // ligaçao à bd testada com sucesso, manter este bloco de código enquanto por backup
         DatabaseConnectionManager dcm = new DatabaseConnectionManager("sdp_db:5432",
@@ -104,8 +99,8 @@ public class ItemServlet extends HttpServlet {
         }catch(SQLException e){
             e.printStackTrace();
         }*/
-
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -122,6 +117,7 @@ public class ItemServlet extends HttpServlet {
         jsonWriter.close();
     }
 
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");  // TODO
@@ -136,6 +132,7 @@ public class ItemServlet extends HttpServlet {
         jsonWriter.writeObject(jsonBuilder.build());
         jsonWriter.close();
     }
+
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -153,24 +150,19 @@ public class ItemServlet extends HttpServlet {
     }
 
 
-
-
-
-
-
-
     public static boolean isInteger(String str) {
         str = str.substring(1);
         try {
             Integer.parseInt(str);
             return true;
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             return false;
         }
     }
 
 
-    private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean stock){
+    private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean stock) {
        //     List<Item> itemsList = warehouse.getItems(bool); //TODO
        //     jsonSender(itemsList);
         warehouse.buildItemsList(stock);
@@ -190,31 +182,28 @@ public class ItemServlet extends HttpServlet {
                 JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
                 jsonWriter.writeArray(warehouse.jsonItemsCollectionSender().build());
                 jsonWriter.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
 
-
-
     private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) { // TODO não parece ser necessário no enunciado, confirmar
-        if(!warehouse.itemExists(itemId)){
+        if(!warehouse.itemExists(itemId)) {
             try {
                 JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
                 jsonBuilder.add(String.valueOf(itemId), "item not found!");
                 JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
                 jsonWriter.writeObject(jsonBuilder.build());
                 jsonWriter.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        else{
-
-
-        }
+        else {}
     }
 
 
