@@ -92,14 +92,14 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public void buildItemsList(boolean stock) {
-        ItemsDAO itemDao = new ItemsDAO(connection);
+        ItemDAO itemDao = new ItemDAO(connection);
         if (stock){
            // itemDao.GetItemsStock(this.itemsList); //em stock
             // TODO Artur: necessário criar método no DAO(ou equivalente) que preencha this.itemsList só com items em stock
             return;
         }
         else{
-            itemDao.GetItemsCollection(this.itemsList); // preenche itemsList com todos os items
+            itemDao.getItemsCollection(this.itemsList); // preenche itemsList com todos os items
             return;
         }
     }
