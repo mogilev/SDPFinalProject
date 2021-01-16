@@ -1,6 +1,5 @@
 package app.views;
 
-import app.models.Item;
 import app.models.ItemClass;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +11,7 @@ import java.util.List;
 
 public class JDBC {
 
+/*
     // Método que faz a ligação com a Base de Dados Postgres que está no container com Webserver Wildfly
     public Connection Connection() {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/example", "postgres", "sdp")) {
@@ -27,7 +27,7 @@ public class JDBC {
     // Faz a query à base de dados para obter a coleção completa da tabela items
     public List<Item> GetItemsCollection() throws SQLException {
         List<Item> items = new ArrayList<>();
-        Item item = new ItemClass();
+        Item item = new ItemClass(name_item, description_item, quantity_item);
         Connection connection = Connection();
         Statement statement = connection.createStatement();
 
@@ -48,5 +48,6 @@ public class JDBC {
         }
         return null;
     }
+*/
 
 }

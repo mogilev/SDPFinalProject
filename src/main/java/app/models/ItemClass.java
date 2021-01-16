@@ -6,7 +6,7 @@ public class ItemClass implements Item {
     private String description;
     private int quantity;
 
-    public ItemClass() {
+    public ItemClass(int id, String name, String description, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
