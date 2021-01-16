@@ -24,13 +24,13 @@ public class ItemsDAO extends ConnectionDAO {
         try {
             //  Connection connection = dcm.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM items");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM items");
 
             while(resultSet.next()) {
-                int id = resultSet.getInt("id_item");
-                String name = resultSet.getString("name_item");
-                String description = resultSet.getString("description_item");
-                int quantity = resultSet.getInt("quantity_item");
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String description = resultSet.getString(4);
+                int quantity = resultSet.getInt(3);
                 Item item = new ItemClass(id, name, description, quantity);
                 itemsList.add(item);
             }

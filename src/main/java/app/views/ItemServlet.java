@@ -2,6 +2,7 @@ package app.views;
 
 import app.controllers.Warehouse;
 import app.controllers.WarehouseClass;
+import app.models.ConnectionDAO;
 import app.models.Data;
 
 import javax.json.Json;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @WebServlet("/items/*")
 public class ItemServlet extends HttpServlet {
@@ -22,6 +27,27 @@ public class ItemServlet extends HttpServlet {
         Warehouse warehouse = new WarehouseClass();
 
         String pathInfo = req.getPathInfo();
+
+
+ /*       ConnectionDAO cdao = new ConnectionDAO();
+        try{
+            Connection connection = cdao.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM items");
+            while(resultSet.next()){
+                System.out.println(resultSet.getInt(1));
+                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+                jsonBuilder.add("name", "Sucesso");
+                jsonBuilder.add("value", resultSet.getInt(1));
+
+                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+                jsonWriter.writeObject(jsonBuilder.build());
+                jsonWriter.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }*/
+
 
         if (!isInteger(pathInfo)) {
             switch (pathInfo) {
@@ -39,6 +65,9 @@ public class ItemServlet extends HttpServlet {
         }
 
 
+
+/*
+        // bloco de codigo de teste, antigo
         resp.setContentType("application/json"); // TODO: 1/11/2021
         String urInfo = req.getRequestURI();
         String contextPath = req.getContextPath();
@@ -52,7 +81,7 @@ public class ItemServlet extends HttpServlet {
 
         JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
         jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
+        jsonWriter.close();*/
 
 
 /*        resp.setContentType("application/json"); // ligaçao à bd testada com sucesso, manter este bloco de código enquanto por backup
@@ -141,10 +170,10 @@ public class ItemServlet extends HttpServlet {
     }
 
 
-    private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean bool){
+    private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean stock){
        //     List<Item> itemsList = warehouse.getItems(bool); //TODO
        //     jsonSender(itemsList);
-        warehouse.buildItemsList(bool);
+        warehouse.buildItemsList(stock);
         if (warehouse.getItemsList().isEmpty()){
             try {
                 JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
