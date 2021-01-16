@@ -9,15 +9,20 @@ import java.util.List;
 
 public class ItemsDAO extends ConnectionDAO {
 
-    public ItemsDAO() {
+    protected static Connection connection;
+
+    public ItemsDAO(Connection connection) {
         super();
+        this.connection = connection;
     }
 
-    public void GetItemsCollection(List<Item> itemsList) {
-        ConnectionDAO dcm = new ConnectionDAO();
+
+
+    public static void GetItemsCollection(List<Item> itemsList) {
+
 
         try {
-            Connection connection = dcm.getConnection();
+            //  Connection connection = dcm.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM items");
 

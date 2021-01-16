@@ -18,12 +18,12 @@ public class ConnectionDAO {
         this.properties = new Properties();
         this.properties.setProperty("user", username);
         this.properties.setProperty("password", password);
-        try {
+        /*try {
             this.getConnection();
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public Connection getConnection() throws SQLException {

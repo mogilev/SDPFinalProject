@@ -55,7 +55,7 @@ public class ItemServlet extends HttpServlet {
         jsonWriter.close();
 
 
-/*        resp.setContentType("application/json");
+/*        resp.setContentType("application/json"); // ligaçao à bd testada com sucesso, manter este bloco de código enquanto por backup
         DatabaseConnectionManager dcm = new DatabaseConnectionManager("sdp_db:5432",
                 "amv_transports", "postgres", "sdp");
         try{

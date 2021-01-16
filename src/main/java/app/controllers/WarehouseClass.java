@@ -5,6 +5,8 @@ import app.models.*;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +15,28 @@ public class WarehouseClass implements Warehouse {
     private List<Item> itemsList;
     private List<Deposit> depositsList;
     private List<Delivery> deliveriesList;
+    private Connection connection;
 
     public WarehouseClass() {
         this.itemsList = new ArrayList<Item>();
         this.depositsList = new ArrayList<Deposit>();
         this.deliveriesList = new ArrayList<Delivery>();
+        this.daoConnection();
+
     }
+
+    public void daoConnection(){
+        ConnectionDAO dcm = new ConnectionDAO();
+
+        /*DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
+                "hplussport", "postgres", "password");*/
+        try{
+            this.connection = dcm.getConnection();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Override
@@ -75,6 +93,8 @@ public class WarehouseClass implements Warehouse {
     @Override
     public void buildItemsList(boolean bool) {
         if (bool){
+            ItemsDAO itemDao = new ItemsDAO(connection);
+            itemDao.GetItemsCollection(this.itemsList);
             // TODO Artur: necessário criar método no DAO(ou equivalente) que preencha this.itemsList só com items em stock
             return;
         }
