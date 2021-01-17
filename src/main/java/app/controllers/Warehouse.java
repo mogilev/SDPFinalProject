@@ -6,6 +6,7 @@ import app.models.Deposit;
 import app.models.Item;
 
 import javax.json.JsonArrayBuilder;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface Warehouse {
@@ -22,8 +23,13 @@ public interface Warehouse {
 
     void deleteItem(int i); // Elimina um determinado item, caso nunca tenha sido registado um depósito ou entrega com este.
 
-    boolean itemExists(int itemId); // verifica se um item existe na base de dados
+    boolean itemIdExists(int itemId); // verifica se um item existe na base de dados
 
+    boolean itemNameExists(String itemId); // verifica se um item existe na base de dados
+
+    void createItem(String itemName); // adiciona novo item
+
+    void jSonSingleOutputSender(HttpServletResponse resp, String key, String value);
 
     //  Listas
 
