@@ -63,7 +63,7 @@ public class ItemServlet extends HttpServlet {
 
 /*
         // bloco de codigo de teste, antigo
-        resp.setContentType("application/json"); // TODO: 1/11/2021
+        resp.setContentType("application/json");
         String urInfo = req.getRequestURI();
         String contextPath = req.getContextPath();
         String servletPath = req.getServletPath();
@@ -109,7 +109,7 @@ public class ItemServlet extends HttpServlet {
 
         commandCreateItem(warehouse, resp, itemName);
 
-        /*resp.setContentType("application/json"); // TODO
+        /*resp.setContentType("application/json");
 
         Data data = new Data("doPost", 42.0);
 
@@ -204,7 +204,7 @@ public class ItemServlet extends HttpServlet {
 
 
     private static void commandCreateItem(Warehouse warehouse, HttpServletResponse resp, String itemName){
-        if (!itemName.isBlank()){
+        if (true){ //!itemName.isBlank()
             warehouse.createItem(resp, itemName);
         }
         else{
