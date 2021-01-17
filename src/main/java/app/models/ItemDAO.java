@@ -18,7 +18,7 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
+    // GET/item Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
     public static void getItemsCollection(List<Item> itemsList) {
 
         try {
@@ -41,7 +41,7 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // Método que faz uma consulta à tabela items, e retorna a lista de items que têm stock > 0
+    // GET/Item/Stock Método que faz uma consulta à tabela items, e retorna a lista de items que têm stock > 0
     public static void getItemsStock(List<Item> itemsList) {
 
         try {
@@ -63,7 +63,7 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
+    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
     public static void getItemById(List<Item> itemsList, int searchId) {
 
         try {
@@ -85,6 +85,7 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
+    // PUT/Item Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
     public static void updateItem(Item item, int option) {
         int searchId = item.getId();
         int quantity = item.getQuantity();
@@ -98,7 +99,6 @@ public class ItemDAO extends ConnectionDAO {
                 e.printStackTrace();
             }
         }
-
         else {
             try {
                 Statement statement = connection.createStatement();
@@ -107,6 +107,30 @@ public class ItemDAO extends ConnectionDAO {
             catch(SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    // POST/Item Método que faz o insert na base de dados de um novo item, na tabela item
+    public static void insertItem(Item item) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO items (name_item, quantity_item, description_item) VALUES (item.name, item.quantity, item.description)");
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // DELET/Item Método que apaga um determinado item na tabela item da base de dados, atravez de um dado id
+    public static void deleteItem(Item item) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM items WHERE id_item = item.id");
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
         }
     }
 
