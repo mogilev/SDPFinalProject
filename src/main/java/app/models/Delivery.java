@@ -6,7 +6,12 @@ public interface Delivery {
 
     int getDeliveryId();
 
-    int getPlace();
+    String getPlace();
+
+    void setPlace(String place);
 
     List<DeliveryItems> getDeliveryItemsList();
+
+    void setDeliveryItems(DeliveryItems deliveryItems);
+
 }
