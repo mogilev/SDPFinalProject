@@ -145,7 +145,7 @@ public class WarehouseClass implements Warehouse {
         for (Item item : this.getItemsList()){
             jsonBuilder.add("name", item.getDescription());
             jsonBuilder.add("description", item.getDescription());
-            jsonBuilder.add("quantity", item.getDescription());
+            jsonBuilder.add("quantity", item.getQuantity());
             jsonArrayBuilder.add(jsonBuilder);
         }
         return jsonArrayBuilder;
@@ -161,8 +161,8 @@ public class WarehouseClass implements Warehouse {
             jsonBuilder.add("description", delivery.getPlace());
             for (DeliveryItems deliveryItems: delivery.getDeliveryItemsList()){
                 jsonBuilder.add("itemId", deliveryItems.getItem().getId());
-                jsonBuilder.add("itemId", deliveryItems.getItem().getName());
-                jsonBuilder.add("itemId", deliveryItems.getQuantity());
+                jsonBuilder.add("name", deliveryItems.getItem().getName());
+                jsonBuilder.add("quantity", deliveryItems.getQuantity());
             }
             jsonArrayBuilder.add(jsonBuilder);
         }
@@ -189,11 +189,14 @@ public class WarehouseClass implements Warehouse {
         ItemDAO itemDao = new ItemDAO(connection);
 
         if(!itemIdExists(itemId)){
-/*            Deposit deposit = new DepositClass(0, itemId);
-            Item item = new ItemClass(0, itemName, null, 0);
-            ItemDAO itemDAO = new ItemDAO(connection);
-            itemDAO.insertItem(item);
-            jSonSingleOutputSender(resp, itemName, "item guardado com sucesso");*/
+            itemDao.getItemById(itemsList, itemId);
+            Item item = getItemsList().get(0);
+            item.setQuantity(item.getQuantity() + quantity);
+
+            Deposit deposit = new DepositClass(0, item, quantity);
+            DepositDAO depositDAO = new DepositDAO(connection);
+            depositDAO.insertDeposit(deposit);
+            jSonSingleOutputSender(resp, item.getName(), "item guardado com sucesso");
         }
         else{
             jSonSingleOutputSender(resp, "Nome", "item não existente!");

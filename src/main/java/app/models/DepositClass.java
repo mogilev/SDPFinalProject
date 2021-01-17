@@ -1,6 +1,6 @@
 package app.models;
 
-public class DepositClass {
+public class DepositClass implements Deposit{
     int id;
     Item item;
     int quantity;
@@ -11,14 +11,19 @@ public class DepositClass {
         this.quantity = quantity;
     }
 
-    int getId() { return id; }
 
-    Item getItem() {
-        return this.item;
+    @Override
+    public int getId() {
+        return 0;
     }
 
-    int getQuantity() {
-        return quantity;
+    @Override
+    public Item getItem() {
+        return null;
     }
 
+    @Override
+    public int getQuantity() {
+        return 0;
+    }
 }
