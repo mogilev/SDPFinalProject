@@ -111,30 +111,19 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-
+    // TODO necessários métodos separados: descrição é PUT /items, quantidade é POST /Deposit
     // PUT/Item Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
-    public static void updateItem(Item item, int option) {
+    public static void updateItem(Item item) {
         int searchId = item.getId();
-        int quantity = item.getQuantity();
 
-        if (option == 1) {
-            try {
-                Statement statement = connection.createStatement();
-                int resultSet = statement.executeUpdate("UPDATE items SET quantity_item = quantity WHERE id_item = searchId");
-            }
+         try {
+            Statement statement = connection.createStatement();
+            int resultSet = statement.executeUpdate("UPDATE items SET quantity_item = quantity WHERE id_item = searchId");
+         }
             catch(SQLException e) {
                 e.printStackTrace();
             }
-        }
-        else {
-            try {
-                Statement statement = connection.createStatement();
-                int resultSet = statement.executeUpdate("UPDATE items SET description_item = description WHERE id_item = searchId");
-            }
-            catch(SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
 
@@ -149,9 +138,23 @@ public class ItemDAO extends ConnectionDAO {
         }
     }
 
+    //  necessário testar
     public static boolean itemNameExists(String itemName) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT (*) FROM items WHERE id_name = searchName");
+        if (resultSet.next() == false) {
+            return false;
+        } else {
+            do {
+                return true;
+            } while (resultSet.next());
+        }
+    }
+
+    //  necessário testar
+    public static boolean itemIdExists(int itemId) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT (*) FROM items WHERE id_item = itemId");
         if (resultSet.next() == false) {
             return false;
         } else {

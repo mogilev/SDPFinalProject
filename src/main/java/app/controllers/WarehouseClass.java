@@ -31,8 +31,6 @@ public class WarehouseClass implements Warehouse {
     public void daoConnection(){
         ConnectionDAO dcm = new ConnectionDAO();
 
-        /*DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost",
-                "hplussport", "postgres", "password");*/
         try{
             this.connection = dcm.getConnection();
         }catch(SQLException e){
@@ -42,33 +40,16 @@ public class WarehouseClass implements Warehouse {
 
 
     @Override
-    public void getItems(boolean bool) {
-
-    }
-
-    @Override
-    public void getStockItems() {
-
-    }
-
-    @Override
-    public void getItem(int i) {
-
-    }
-
-    @Override
-    public void changeItem(int i, String description) {
-
-    }
-
-    @Override
-    public void createItems(Item item) {
-
-    }
-
-    @Override
-    public void deleteItem(int itemId) {
-
+    public void deleteItem(Warehouse warehouse, HttpServletResponse resp, int itemId) {
+        ItemDAO itemDAO = new ItemDAO(connection);
+        try {
+            if (itemDAO.itemIdExists(itemId)){
+                DeliveryDAO deliveryDao = new DeliveryDAO(connection);
+   //             if (deliveryDao.delivery)
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     } // TODO - aqui ficarão as regras de negócio (segundo o brainstorm na aula 05/01/2021 - 55min)
 
     @Override
@@ -113,6 +94,24 @@ public class WarehouseClass implements Warehouse {
         }
     }
 
+    @Override
+    public void updateItem(Warehouse warehouse, HttpServletResponse resp, int itemId, String description) {
+        ItemDAO itemDao = new ItemDAO(connection);
+        try {
+            if(itemDao.itemIdExists(itemId)){
+                Item item = new ItemClass(itemId, null, description, 0);
+                ItemDAO itemDAO = new ItemDAO(connection);
+                itemDAO.updateItem(item);
+                jSonSingleOutputSender(resp, String.valueOf(itemId), "item guardado com sucesso");
+            }
+            else{
+                jSonSingleOutputSender(resp, "Nome", "valor já existe!");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 
 
     @Override

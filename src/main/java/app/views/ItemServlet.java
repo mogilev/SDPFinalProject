@@ -46,7 +46,6 @@ public class ItemServlet extends HttpServlet {
             e.printStackTrace();
         }*/
 
-
         if (!isInteger(pathInfo)) {
             switch (pathInfo) {
                 case "/":
@@ -126,34 +125,22 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");  // TODO
+        Warehouse warehouse = new WarehouseClass();
+        String pathInfo = req.getPathInfo();
+        String itemComment = req.getParameter("description");
+        commandUpdateItem(warehouse, resp, pathInfo, itemComment);
 
-        Data data = new Data("doPut", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
     }
 
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); // TODO
-
-        Data data = new Data("doDelete", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
+        Warehouse warehouse = new WarehouseClass();
+        String pathInfo = req.getPathInfo();
+        String itemComment = req.getParameter("description");
+        commandDeleteItem(warehouse, resp, pathInfo);
     }
+
 
 
     public static boolean isInteger(String str) {
@@ -236,4 +223,29 @@ public class ItemServlet extends HttpServlet {
             }*/
         }
     }
+
+    private static void commandUpdateItem(Warehouse warehouse, HttpServletResponse resp, String pathInfo,String itemComment) {
+
+        if (isInteger(pathInfo)) {
+            pathInfo = pathInfo.substring(1);
+            int itemId = Integer.parseInt(pathInfo);
+            warehouse.updateItem(warehouse, resp, itemId,itemComment);
+        }
+        else {
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
+        }
+    }
+
+
+    private void commandDeleteItem(Warehouse warehouse, HttpServletResponse resp, String pathInfo) {
+        if (isInteger(pathInfo)) {
+            pathInfo = pathInfo.substring(1);
+            int itemId = Integer.parseInt(pathInfo);
+            warehouse.deleteItem(warehouse, resp, itemId);
+        }
+        else {
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
+        }
+    }
+
 }
