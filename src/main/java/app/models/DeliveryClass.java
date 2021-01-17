@@ -3,14 +3,12 @@ package app.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryClass {
-    int id;
-    private String place;
+public class DeliveryClass implements Delivery {
+    private int id;
+    private int place;
     private List<DeliveryItems> deliveryItemsList;
-    // TODO
 
-
-    public DeliveryClass(int id, String place) {
+    public DeliveryClass(int id, int place) {
         this.id = id;
         this.place = place;
         this.deliveryItemsList = new ArrayList<DeliveryItems>();
@@ -20,7 +18,7 @@ public class DeliveryClass {
         return id;
     }
 
-    public String getPlace() {
+    public int getPlace() {
         return place;
     }
 

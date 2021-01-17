@@ -6,9 +6,7 @@ public interface Delivery {
 
     int getDeliveryId();
 
-    String getPlace();
+    int getPlace();
 
     List<DeliveryItems> getDeliveryItemsList();
-
-
 }

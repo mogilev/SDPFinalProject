@@ -14,6 +14,23 @@ public class DeliveryDAO {
         super();
         this.connection = connection;
     }
+    public static void getDeliveries(List<Delivery> deliveries) {
+        List<DeliveryItems> deliveryItems = ;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM delivery");
+            while(resultSet.next()) {
+                int id = resultSet.getInt(1);
+                int place = resultSet.getInt(2);
+                deliveries.add(id, place, deliveryItems);
+            }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 /*
