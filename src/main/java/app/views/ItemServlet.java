@@ -104,7 +104,13 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); // TODO
+
+        Warehouse warehouse = new WarehouseClass();
+        String itemName = req.getParameter("name");
+
+        commandCreateItem(warehouse, resp, itemName);
+
+        /*resp.setContentType("application/json"); // TODO
 
         Data data = new Data("doPost", 42.0);
 
@@ -114,7 +120,7 @@ public class ItemServlet extends HttpServlet {
 
         JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
         jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
+        jsonWriter.close();*/
     }
 
 
@@ -167,7 +173,9 @@ public class ItemServlet extends HttpServlet {
        //     jsonSender(itemsList);
         warehouse.buildItemsList(stock);
         if (warehouse.getItemsList().isEmpty()){
-            try {
+            warehouse.jSonSingleOutputSender(resp,"error","no items found!");
+            //  à partida o metodo anterior resolve este bloco try
+/*            try {
                 JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
                 jsonBuilder.add("error", "no items found!");
                 JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
@@ -175,7 +183,7 @@ public class ItemServlet extends HttpServlet {
                 jsonWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         else {
             try {
@@ -191,8 +199,10 @@ public class ItemServlet extends HttpServlet {
 
 
     private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) { // TODO não parece ser necessário no enunciado, confirmar
-        if(!warehouse.itemExists(itemId)) {
-            try {
+        if(!warehouse.itemIdExists(itemId)) {
+            warehouse.jSonSingleOutputSender(resp,String.valueOf(itemId),"item not found!");
+            //  à partida o metodo anterior resolve este bloco try
+/*            try {
                 JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
                 jsonBuilder.add(String.valueOf(itemId), "item not found!");
                 JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
@@ -201,10 +211,29 @@ public class ItemServlet extends HttpServlet {
             }
             catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         else {}
     }
 
 
+    private static void commandCreateItem(Warehouse warehouse, HttpServletResponse resp, String itemName){
+        if (!itemName.isBlank()){
+            warehouse.createItem(itemName);
+        }
+        else{
+            warehouse.jSonSingleOutputSender(resp,"Nome","dado obrigatório do item em falta");
+/*            try {
+
+                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+                jsonBuilder.add("Nome", "dado obrigatório do item em falta");
+                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+                jsonWriter.writeObject(jsonBuilder.build());
+                jsonWriter.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
 }

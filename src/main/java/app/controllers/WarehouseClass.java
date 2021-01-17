@@ -5,6 +5,9 @@ import app.models.*;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,10 +73,39 @@ public class WarehouseClass implements Warehouse {
     } // TODO - aqui ficarão as regras de negócio (segundo o brainstorm na aula 05/01/2021 - 55min)
 
     @Override
-    public boolean itemExists(int itemId) {
-        // DAO.daoItemExists todo
+    public boolean itemIdExists(int itemId) { // confirmar este método
+        Item item = ItemDAO.getItemById(itemId);
+        if (item.getId() == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    @Override
+    public boolean itemNameExists(String itemName) {
+/*        Item item = ItemDAO.getItemByName(itemName);
+        if(itemDAO.getItemByName(StringName itemName)){
+            return true;
+        }
+        else{
+            return false;
+        }*/
         return false;
     }
+
+    @Override
+    public void createItem(String itemName) {
+        if(!itemNameExists(itemName)){
+            Item item = new ItemClass(0, itemName, null, 0);
+        }
+        else{
+
+        }
+    }
+
+
 
     @Override
     public List<Item> getItemsList() {
@@ -135,5 +167,19 @@ public class WarehouseClass implements Warehouse {
         return jsonArrayBuilder;
     }
 
+
+    @Override
+    public void jSonSingleOutputSender(HttpServletResponse resp, String key, String value) {
+        resp.setContentType("application/json");
+        try {
+            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
+            jsonBuilder.add(key, value);
+            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
+            jsonWriter.writeObject(jsonBuilder.build());
+            jsonWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

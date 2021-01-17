@@ -64,24 +64,50 @@ public class ItemDAO extends ConnectionDAO {
 
 
     // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
-    public static void getItemById(List<Item> itemsList, int searchId) {
+    public static Item getItemById(int searchId) {
+        int id = 0;
+        String name = null;
+        int quantity = 0;
+        String description = null;
 
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_item = searchId");
 
-            while(resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String name = resultSet.getString(2);
-                int quantity = resultSet.getInt(3);
-                String description = resultSet.getString(4);
-                Item item = new ItemClass(id, name, description, quantity);
-                itemsList.add(item);
-            }
+            id = resultSet.getInt(1);
+            name = resultSet.getString(2);
+            quantity = resultSet.getInt(3);
+            description = resultSet.getString(4);
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
+        Item item = new ItemClass(id, name, description, quantity);
+        return item;
+    }
+
+
+    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
+    public static Item getItemByName(String searchName) {
+        int id = 0;
+        String name = null;
+        int quantity = 0;
+        String description = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_name = searchName");
+
+            id = resultSet.getInt(1);
+            name = resultSet.getString(2);
+            quantity = resultSet.getInt(3);
+            description = resultSet.getString(4);
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        Item item = new ItemClass(id, name, description, quantity);
+        return item;
     }
 
 
