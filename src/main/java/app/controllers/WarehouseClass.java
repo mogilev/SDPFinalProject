@@ -41,7 +41,6 @@ public class WarehouseClass implements Warehouse {
     }
 
 
-
     @Override
     public void getItems(boolean bool) {
 
@@ -74,7 +73,8 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public boolean itemIdExists(int itemId) { // confirmar este método
-        Item item = ItemDAO.getItemById(itemId);
+        ItemDAO itemDAO = new ItemDAO(connection);
+        Item item = itemDAO.getItemById(itemId);
         if (item.getId() == 0){
             return false;
         }
@@ -85,23 +85,31 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public boolean itemNameExists(String itemName) {
-/*        Item item = ItemDAO.getItemByName(itemName);
-        if(itemDAO.getItemByName(StringName itemName)){
+        ItemDAO itemDAO = new ItemDAO(connection);
+        Item item = itemDAO.getItemByName(itemName);
+        if(item.getName().contentEquals(itemName)){
             return true;
         }
         else{
             return false;
-        }*/
-        return false;
+        }
     }
 
     @Override
-    public void createItem(String itemName) {
-        if(!itemNameExists(itemName)){
-            Item item = new ItemClass(0, itemName, null, 0);
-        }
-        else{
-
+    public void createItem(HttpServletResponse resp, String itemName) {
+        ItemDAO itemDao = new ItemDAO(connection);
+        try {
+            if(!itemDao.itemNameExists(itemName)){
+                Item item = new ItemClass(0, itemName, null, 0);
+                ItemDAO itemDAO = new ItemDAO(connection);
+                itemDAO.insertItem(item);
+                jSonSingleOutputSender(resp, itemName, "item guardado com sucesso");
+            }
+            else{
+                jSonSingleOutputSender(resp, "Nome", "valor já existe!");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 

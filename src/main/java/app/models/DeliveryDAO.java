@@ -34,8 +34,8 @@ public class DeliveryDAO {
                     int idDeliveryItem = resultSetItem.getInt(1);
                     int idItem = resultSetItem.getInt(2);
                     int quantity = resultSetItem.getInt(3);
-                    DeliveryItems deliveryItem = new DeliveryItemsClass(idDeliveryItem, idItem, quantity);
-                    deliveryItems.add(deliveryItem);
+       //             DeliveryItems deliveryItem = new DeliveryItemsClass(idItem, quantity);
+       //             deliveryItems.add(deliveryItem);
                 }
 
                 Delivery delivery = new DeliveryClass(idDelivery, place, deliveryItems);

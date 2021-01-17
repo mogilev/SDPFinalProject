@@ -149,6 +149,18 @@ public class ItemDAO extends ConnectionDAO {
         }
     }
 
+    public static boolean itemNameExists(String itemName) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT (*) FROM items WHERE id_name = searchName");
+        if (resultSet.next() == false) {
+            return false;
+        } else {
+            do {
+                return true;
+            } while (resultSet.next());
+        }
+    }
+
 
     // DELET/Item Método que apaga um determinado item na tabela item da base de dados, atravez de um dado id
     public static void deleteItem(Item item) {

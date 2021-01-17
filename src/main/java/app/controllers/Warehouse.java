@@ -27,7 +27,7 @@ public interface Warehouse {
 
     boolean itemNameExists(String itemId); // verifica se um item existe na base de dados
 
-    void createItem(String itemName); // adiciona novo item
+    void createItem(HttpServletResponse resp, String itemName); // adiciona novo item
 
     void jSonSingleOutputSender(HttpServletResponse resp, String key, String value);
 

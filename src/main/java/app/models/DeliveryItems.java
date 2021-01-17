@@ -2,9 +2,7 @@ package app.models;
 
 public interface DeliveryItems {
 
-    int getDelivery();
-
-    int getItem();
+    Item getItem();
 
     int getQuantity();
 

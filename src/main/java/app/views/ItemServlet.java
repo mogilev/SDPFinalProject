@@ -219,7 +219,7 @@ public class ItemServlet extends HttpServlet {
 
     private static void commandCreateItem(Warehouse warehouse, HttpServletResponse resp, String itemName){
         if (!itemName.isBlank()){
-            warehouse.createItem(itemName);
+            warehouse.createItem(resp, itemName);
         }
         else{
             warehouse.jSonSingleOutputSender(resp,"Nome","dado obrigatório do item em falta");
