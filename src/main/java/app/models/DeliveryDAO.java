@@ -10,7 +10,7 @@ public class DeliveryDAO {
     protected static Connection connection;
 
 
-    public ItemDAO(Connection connection) { // construtor da classe
+    public DeliveryDAO(Connection connection) { // construtor da classe
         super();
         this.connection = connection;
     }

@@ -163,7 +163,7 @@ public class ItemServlet extends HttpServlet {
 
 
     private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean stock) {
-       //     List<Item> itemsList = warehouse.getItems(bool); //TODO
+       //     List<Item> itemsList = warehouse.getItems(bool);
        //     jsonSender(itemsList);
         warehouse.buildItemsList(stock);
         if (warehouse.getItemsList().isEmpty()){

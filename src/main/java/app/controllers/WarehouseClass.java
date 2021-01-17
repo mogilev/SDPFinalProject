@@ -71,7 +71,7 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public boolean itemExists(int itemId) {
-        // DAO.daoItemExists todo Artur
+        // DAO.daoItemExists todo
         return false;
     }
 
@@ -94,8 +94,7 @@ public class WarehouseClass implements Warehouse {
     public void buildItemsList(boolean stock) {
         ItemDAO itemDao = new ItemDAO(connection);
         if (stock){
-           // itemDao.GetItemsStock(this.itemsList); //em stock
-            // TODO Artur: necessário criar método no DAO(ou equivalente) que preencha this.itemsList só com items em stock
+            itemDao.getItemsStock(this.itemsList); //em stock
             return;
         }
         else{
