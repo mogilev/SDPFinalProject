@@ -16,7 +16,6 @@ import java.io.IOException;
 
     @WebServlet("/deposit")
     public class DepositServlet extends HttpServlet {
-
         Warehouse warehouse = new WarehouseClass();
 
         @Override
@@ -34,10 +33,12 @@ import java.io.IOException;
             commandCreateDeposit(warehouse, resp, pathInfo, value);
         }
 
+
         @Override
         protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
         }
+
 
         @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,6 +57,7 @@ import java.io.IOException;
             }
         }
 
+
         public void commandCreateDeposit(Warehouse warehouse, HttpServletResponse resp, String id, String value) {
 
             if (isInteger(id)) {
@@ -68,7 +70,6 @@ import java.io.IOException;
             else {
                 warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
             }
-
-
         }
+
     }

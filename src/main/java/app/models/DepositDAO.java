@@ -1,11 +1,7 @@
 package app.models;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import static app.models.ItemDAO.updateItem;
 
 public class DepositDAO {
     protected static Connection connection;
@@ -17,21 +13,20 @@ public class DepositDAO {
     }
 
 
-    // POST/Item Método que faz o insert na base de dados de um novo item, na tabela item
-    public static void insertItem(Deposit deposit) {
-        try {
-            Statement statement = connection.createStatement();
-            int idItem = deposit.getItem().getId();
-            int quantity = deposit.getQuantity();
-            statement.executeUpdate("INSERT INTO deposits (id_item, quantity_deposits) VALUES (idItem, quantity)");
-            Statement statement2 = connection.createStatement();
+    // POST/Item Método que faz o insert na base de dados de um deposito, actualizando a quantidade na tabela de items
+    public static void insertDeposit(Deposit deposit) {
+        String INSERT = "INSERT INTO deposits (id_item, quantity_deposits) VALUES (?)";
 
+        try(PreparedStatement statement = connection.prepareStatement(INSERT);) {
+            statement.setInt(1, deposit.getItem().getId());
+            statement.setInt(2, deposit.getQuantity());
+            statement.execute();
+            updateItem(deposit.getItem(), deposit.getItem().getQuantity()); // PUT/Items update quantidade na tabela de items
         }
         catch(SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
-
-
 
 }

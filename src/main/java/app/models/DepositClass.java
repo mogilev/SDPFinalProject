@@ -11,8 +11,7 @@ public class DepositClass {
         this.quantity = quantity;
     }
 
-    int getId() { return id;
-    }
+    int getId() { return id; }
 
     Item getItem() {
         return this.item;

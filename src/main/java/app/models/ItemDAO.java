@@ -65,8 +65,12 @@ public class ItemDAO extends ConnectionDAO {
     public static void getItemById(List<Item> itemsList, int searchId) {
 
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_item = searchId");
+            //Statement statement = connection.createStatement();
+            String SELECT = "SELECT * FROM items WHERE id_name = ?";
+            PreparedStatement statement = connection.prepareStatement(SELECT);
+            ResultSet resultSet = statement.executeQuery(SELECT);
+            statement.setInt(1, searchId);
+            statement.execute();
 
             while(resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -87,8 +91,12 @@ public class ItemDAO extends ConnectionDAO {
     public static void getItemByName(List<Item> itemsList, String searchName) {
 
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_name = searchName");
+            //Statement statement = connection.createStatement();
+            String SELECT = "SELECT * FROM items WHERE id_name = ?";
+            PreparedStatement statement = connection.prepareStatement(SELECT);
+            ResultSet resultSet = statement.executeQuery(SELECT);
+            statement.setString(1, searchName);
+            statement.execute();
 
             while(resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -120,20 +128,20 @@ public class ItemDAO extends ConnectionDAO {
 
     }*/
 
+    // PUT/Items Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
     public static int updateItem(Item item, int option) {
         int searchId = item.getId();
 
-        if (option == 3) {
+        if(option == 3) {
             String UPDATEQTY = "UPDATE items SET quantity_item = ? WHERE id_item = ?";
-
             int quantity = item.getQuantity();
 
-            try(PreparedStatement statement = connection.prepareStatement(UPDATEQTY);){
+            try(PreparedStatement statement = connection.prepareStatement(UPDATEQTY);) {
                 statement.setInt(1, searchId);
                 statement.setInt(2, quantity);
                 statement.execute();
-
-            }catch(SQLException e){
+            }
+            catch(SQLException e){
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
@@ -147,21 +155,19 @@ public class ItemDAO extends ConnectionDAO {
                 e.printStackTrace();
             }*/
         }
-
-        else if(option == 4){
+        else if(option == 4) {
             String description = item.getDescription();
-
             String UPDATEDESCRIPTION = "UPDATE items SET description_item = ? WHERE id_item = ?";
 
-            try(PreparedStatement statement = connection.prepareStatement(UPDATEDESCRIPTION);){
+            try(PreparedStatement statement = connection.prepareStatement(UPDATEDESCRIPTION);) {
                 statement.setInt(1, searchId);
                 statement.setString(2, description);
                 statement.execute();
-
-            }catch(SQLException e){
+            }
+            catch(SQLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
-                }
+            }
             return 0;
 
                 // else IF com versão anterior
@@ -177,22 +183,15 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-
-
-
-
-
-
     // POST/Item Método que faz o insert na base de dados de um novo item, na tabela item
     public static int insertItem(Item item) {
-
         String INSERT = "INSERT INTO customer (name_item) VALUES (?)";
 
-        try(PreparedStatement statement = connection.prepareStatement(INSERT);){
+        try(PreparedStatement statement = connection.prepareStatement(INSERT);) {
             statement.setString(1, item.getName());
             statement.execute();
-
-        }catch(SQLException e){
+        }
+        catch(SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -219,5 +218,4 @@ public class ItemDAO extends ConnectionDAO {
             e.printStackTrace();
         }
     }
-
 }
