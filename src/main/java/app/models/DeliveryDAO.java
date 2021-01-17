@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryDAO {
@@ -14,46 +15,37 @@ public class DeliveryDAO {
         super();
         this.connection = connection;
     }
+
+    // GET/Delivey - Método que executa uma busca à tabele delevery  e delevery_items, da base de dados, retornando
+    // todas as entregas e respetivos items que fazem parte da entrega
     public static void getDeliveries(List<Delivery> deliveries) {
-        List<DeliveryItems> deliveryItems = ;
+        List<DeliveryItems> deliveryItems = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM delivery");
-            while(resultSet.next()) {
-                int id = resultSet.getInt(1);
-                int place = resultSet.getInt(2);
-                deliveries.add(id, place, deliveryItems);
-            }
 
-        }
-        catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
+            ResultSet resultSetDelivery = statement.executeQuery("SELECT * FROM delivery");
+            while (resultSetDelivery.next()) {
+                int idDelivery = resultSetDelivery.getInt(1);
+                int place = resultSetDelivery.getInt(2);
 
+                ResultSet resultSetItem = statement.executeQuery("SELECT * FROM delivery_items WHERE id_delivery = id_delivery");
+                while (resultSetItem.next()) {
+                    int idDeliveryItem = resultSetItem.getInt(1);
+                    int idItem = resultSetItem.getInt(2);
+                    int quantity = resultSetItem.getInt(3);
+                    DeliveryItems deliveryItem = new DeliveryItemsClass(idDeliveryItem, idItem, quantity);
+                    deliveryItems.add(deliveryItem);
+                }
 
-/*
-    // Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
-    public static void getItemsCollection(List<Item> itemsList) {
-
-        try {
-            //  Connection connection = dcm.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM items");
-
-            while(resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String name = resultSet.getString(2);
-                int quantity = resultSet.getInt(3);
-                String description = resultSet.getString(4);
-                Item item = new ItemClass(id, name, description, quantity);
-                itemsList.add(item);
+                Delivery delivery = new DeliveryClass(idDelivery, place, deliveryItems);
+                deliveries.add(delivery);
             }
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
     }
-*/
+
+
 }

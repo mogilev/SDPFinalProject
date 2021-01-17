@@ -1,15 +1,19 @@
 package app.models;
 
 public class DeliveryItemsClass implements DeliveryItems{
-    private Item item;
+    private int delivery;
+    private int item;
     private int quantity;
 
-    public DeliveryItemsClass(Item item, int quantity) {
+    public DeliveryItemsClass(int delivery, int item, int quantity) {
+        this.delivery = delivery;
         this.item = item;
         this.quantity = quantity;
     }
 
-    public Item getItem() {
+    public int getDelivery() { return delivery; }
+
+    public int getItem() {
         return item;
     }
 
