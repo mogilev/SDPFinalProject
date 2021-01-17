@@ -41,22 +41,24 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public void deleteItem(Warehouse warehouse, HttpServletResponse resp, int itemId) {
-        ItemDAO itemDAO = new ItemDAO(connection);
-        try {
-            if (itemDAO.itemIdExists(itemId)){
-                DeliveryDAO deliveryDao = new DeliveryDAO(connection);
-   //             if (deliveryDao.delivery)
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        if (itemIdExists(itemId)){
+            DeliveryDAO deliveryDao = new DeliveryDAO(connection);
+   //       if (deliveryDao.deliveryExists)
+
+
+        }
+        else{
+            jSonSingleOutputSender(resp, "Nome", "item inexistente!");
         }
     } // TODO - aqui ficarão as regras de negócio (segundo o brainstorm na aula 05/01/2021 - 55min)
+
 
     @Override
     public boolean itemIdExists(int itemId) { // confirmar este método
         ItemDAO itemDAO = new ItemDAO(connection);
-        Item item = itemDAO.getItemById(itemId);
-        if (item.getId() == 0){
+        itemDAO.getItemById(itemsList, itemId);
+        if (this.getItemsList().isEmpty()){
             return false;
         }
         else{
@@ -64,53 +66,46 @@ public class WarehouseClass implements Warehouse {
         }
     }
 
+
     @Override
     public boolean itemNameExists(String itemName) {
         ItemDAO itemDAO = new ItemDAO(connection);
-        Item item = itemDAO.getItemByName(itemName);
-        if(item.getName().contentEquals(itemName)){
-            return true;
+        itemDAO.getItemByName(itemsList, itemName);
+        if (this.getItemsList().isEmpty()){
+            return false;
         }
         else{
-            return false;
+            return true;
         }
     }
 
     @Override
     public void createItem(HttpServletResponse resp, String itemName) {
         ItemDAO itemDao = new ItemDAO(connection);
-        try {
-            if(!itemDao.itemNameExists(itemName)){
-                Item item = new ItemClass(0, itemName, null, 0);
-                ItemDAO itemDAO = new ItemDAO(connection);
-                itemDAO.insertItem(item);
-                jSonSingleOutputSender(resp, itemName, "item guardado com sucesso");
-            }
-            else{
-                jSonSingleOutputSender(resp, "Nome", "valor já existe!");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        if(!itemNameExists(itemName)){
+            Item item = new ItemClass(0, itemName, null, 0);
+            ItemDAO itemDAO = new ItemDAO(connection);
+            itemDAO.insertItem(item);
+            jSonSingleOutputSender(resp, itemName, "item guardado com sucesso");
+        }
+        else{
+            jSonSingleOutputSender(resp, "Nome", "valor já existe!");
         }
     }
 
     @Override
     public void updateItem(Warehouse warehouse, HttpServletResponse resp, int itemId, String description) {
-        ItemDAO itemDao = new ItemDAO(connection);
-        try {
-            if(itemDao.itemIdExists(itemId)){
-                Item item = new ItemClass(itemId, null, description, 0);
-                ItemDAO itemDAO = new ItemDAO(connection);
-                itemDAO.updateItem(item);
-                jSonSingleOutputSender(resp, String.valueOf(itemId), "item guardado com sucesso");
-            }
-            else{
-                jSonSingleOutputSender(resp, "Nome", "valor já existe!");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
+        if(itemIdExists(itemId)){
+            Item item = new ItemClass(itemId, null, description, 0);
+            ItemDAO itemDAO = new ItemDAO(connection);
+            itemDAO.updateItem(item, 4); //opção 4 - actualizar descrição
+            jSonSingleOutputSender(resp, String.valueOf(itemId), "item guardado com sucesso");
+        }
+        else{
+            jSonSingleOutputSender(resp, "Nome", "valor já existe!");
+        }
     }
 
 
@@ -188,5 +183,22 @@ public class WarehouseClass implements Warehouse {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void createDeposit(Warehouse warehouse, HttpServletResponse resp, int itemId, int quantity) {
+        ItemDAO itemDao = new ItemDAO(connection);
+
+        if(!itemIdExists(itemId)){
+/*            Deposit deposit = new DepositClass(0, itemId);
+            Item item = new ItemClass(0, itemName, null, 0);
+            ItemDAO itemDAO = new ItemDAO(connection);
+            itemDAO.insertItem(item);
+            jSonSingleOutputSender(resp, itemName, "item guardado com sucesso");*/
+        }
+        else{
+            jSonSingleOutputSender(resp, "Nome", "item não existente!");
+        }
+    }
+
 
 }

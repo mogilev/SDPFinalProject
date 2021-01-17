@@ -2,36 +2,24 @@ package app.models;
 
 public class DepositClass {
     int id;
-    int itemId;
+    Item item;
     int quantity;
 
-    public DepositClass(int id, int itemId, int quantity) {
+    public DepositClass(int id, Item item, int quantity) {
         this.id = id;
-        this.itemId = itemId;
+        this.item = item;
         this.quantity = quantity;
     }
 
-    public int getId() {
-        return id;
+    int getId() { return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    Item getItem() {
+        return this.item;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

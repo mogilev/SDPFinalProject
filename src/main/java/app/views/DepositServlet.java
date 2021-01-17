@@ -14,83 +14,61 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-    @WebServlet("/deposit/*")
+    @WebServlet("/deposit")
     public class DepositServlet extends HttpServlet {
 
         Warehouse warehouse = new WarehouseClass();
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            resp.setContentType("application/json"); // TODO: 1/11/2021
-
-            String urInfo = req.getRequestURI();
-            String contextPath = req.getContextPath();
-            String servletPath = req.getServletPath();
-            String pathInfo = req.getPathInfo();
-
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            jsonBuilder.add("urInfo", urInfo);
-            jsonBuilder.add("contextPath", contextPath);
-            jsonBuilder.add("servletPath", servletPath);
-            jsonBuilder.add("pathInfo", pathInfo);
-
-            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-            jsonWriter.writeObject(jsonBuilder.build());
-            jsonWriter.close();
-
-/*            Data data = new Data("doGet", 42.0);
-
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            jsonBuilder.add("name", data.getName());
-            jsonBuilder.add("value", data.getValue());
-
-            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-            jsonWriter.writeObject(jsonBuilder.build());
-            jsonWriter.close();*/
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
         }
+
 
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            resp.setContentType("application/json"); // TODO
 
-            Data data = new Data("doPost", 42.0);
-
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            jsonBuilder.add("name", data.getName());
-            jsonBuilder.add("value", data.getValue());
-
-            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-            jsonWriter.writeObject(jsonBuilder.build());
-            jsonWriter.close();
+            Warehouse warehouse = new WarehouseClass();
+            String pathInfo = req.getParameter("itemId");
+            String value = req.getParameter("quantity");
+            commandCreateDeposit(warehouse, resp, pathInfo, value);
         }
 
         @Override
         protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            resp.setContentType("application/json");  // TODO
-
-            Data data = new Data("doPut", 42.0);
-
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            jsonBuilder.add("name", data.getName());
-            jsonBuilder.add("value", data.getValue());
-
-            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-            jsonWriter.writeObject(jsonBuilder.build());
-            jsonWriter.close();
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
         }
 
         @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            resp.setContentType("application/json"); // TODO
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
+        }
 
-            Data data = new Data("doDelete", 42.0);
 
-            JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-            jsonBuilder.add("name", data.getName());
-            jsonBuilder.add("value", data.getValue());
+        public static boolean isInteger(String str) {
+            str = str.substring(1);
+            try {
+                Integer.parseInt(str);
+                return true;
+            }
+            catch (NumberFormatException e) {
+                return false;
+            }
+        }
 
-            JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-            jsonWriter.writeObject(jsonBuilder.build());
-            jsonWriter.close();
+        public void commandCreateDeposit(Warehouse warehouse, HttpServletResponse resp, String id, String value) {
+
+            if (isInteger(id)) {
+                id = id.substring(1);
+                int itemId = Integer.parseInt(id);
+                value = value.substring(1);
+                int quantity = Integer.parseInt(value);
+                warehouse.createDeposit(warehouse, resp, itemId, quantity);
+            }
+            else {
+                warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
+            }
+
+
         }
     }

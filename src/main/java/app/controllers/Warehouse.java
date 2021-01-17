@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface Warehouse {
 
+    void daoConnection(); // Estabelece conexão com a base de dados
 
     void deleteItem(Warehouse warehouse, HttpServletResponse resp,int i); // Elimina um determinado item, caso nunca tenha sido registado um depósito ou entrega com este.
 
@@ -25,6 +26,9 @@ public interface Warehouse {
     void buildItemsList(boolean bool);
 
     void jSonSingleOutputSender(HttpServletResponse resp, String key, String value);
+
+    void createDeposit(Warehouse warehouse,HttpServletResponse resp, int itemId, int quantity);
+
 
     //  Listas
 

@@ -137,7 +137,6 @@ public class ItemServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Warehouse warehouse = new WarehouseClass();
         String pathInfo = req.getPathInfo();
-        String itemComment = req.getParameter("description");
         commandDeleteItem(warehouse, resp, pathInfo);
     }
 

@@ -1,15 +1,13 @@
 package app.models;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 // Classe que faz a ligação (DAO - Data Access Object) à Base de Dados Postgres, na tabela items
 public class ItemDAO extends ConnectionDAO {
     protected static Connection connection;
+
 
 
     public ItemDAO(Connection connection) { // construtor da classe
@@ -63,56 +61,52 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
-    public static Item getItemById(int searchId) {
-        int id = 0;
-        String name = null;
-        int quantity = 0;
-        String description = null;
+    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, através do Id
+    public static void getItemById(List<Item> itemsList, int searchId) {
 
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_item = searchId");
 
-            id = resultSet.getInt(1);
-            name = resultSet.getString(2);
-            quantity = resultSet.getInt(3);
-            description = resultSet.getString(4);
+            while(resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                int quantity = resultSet.getInt(3);
+                String description = resultSet.getString(4);
+                Item item = new ItemClass(id, name, description, quantity);
+                itemsList.add(item);
+            }
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
-        Item item = new ItemClass(id, name, description, quantity);
-        return item;
     }
 
 
-    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, atravez do Id
-    public static Item getItemByName(String searchName) {
-        int id = 0;
-        String name = null;
-        int quantity = 0;
-        String description = null;
+    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, através do Id
+    public static void getItemByName(List<Item> itemsList, String searchName) {
 
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id_name = searchName");
 
-            id = resultSet.getInt(1);
-            name = resultSet.getString(2);
-            quantity = resultSet.getInt(3);
-            description = resultSet.getString(4);
+            while(resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                int quantity = resultSet.getInt(3);
+                String description = resultSet.getString(4);
+                Item item = new ItemClass(id, name, description, quantity);
+                itemsList.add(item);
+            }
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
-        Item item = new ItemClass(id, name, description, quantity);
-        return item;
     }
 
 
     // TODO necessários métodos separados: descrição é PUT /items, quantidade é POST /Deposit
-    // PUT/Item Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
+ /*   // PUT/Item Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
     public static void updateItem(Item item) {
         int searchId = item.getId();
 
@@ -124,44 +118,94 @@ public class ItemDAO extends ConnectionDAO {
                 e.printStackTrace();
             }
 
+    }*/
+
+    public static int updateItem(Item item, int option) {
+        int searchId = item.getId();
+
+        if (option == 3) {
+            String UPDATEQTY = "UPDATE items SET quantity_item = ? WHERE id_item = ?";
+
+            int quantity = item.getQuantity();
+
+            try(PreparedStatement statement = connection.prepareStatement(UPDATEQTY);){
+                statement.setInt(1, searchId);
+                statement.setInt(2, quantity);
+                statement.execute();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+            return 0;
+                    //  código anterio
+/*            try {
+                Statement statement = connection.createStatement();
+                int resultSet = statement.executeUpdate("UPDATE items SET quantity_item = quantity WHERE id_item = searchId");
+            }
+            catch(SQLException e) {
+                e.printStackTrace();
+            }*/
+        }
+
+        else if(option == 4){
+            String description = item.getDescription();
+
+            String UPDATEDESCRIPTION = "UPDATE items SET description_item = ? WHERE id_item = ?";
+
+            try(PreparedStatement statement = connection.prepareStatement(UPDATEDESCRIPTION);){
+                statement.setInt(1, searchId);
+                statement.setString(2, description);
+                statement.execute();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+                throw new RuntimeException(e);
+                }
+            return 0;
+
+                // else IF com versão anterior
+/*            try {
+                Statement statement = connection.createStatement();
+                int resultSet = statement.executeUpdate("UPDATE items SET description_item = description WHERE id_item = searchId");
+            }
+            catch(SQLException e) {
+                e.printStackTrace();
+            }*/
+        }
+        return 0;
     }
 
 
+
+
+
+
+
+
     // POST/Item Método que faz o insert na base de dados de um novo item, na tabela item
-    public static void insertItem(Item item) {
-        try {
+    public static int insertItem(Item item) {
+
+        String INSERT = "INSERT INTO customer (name_item) VALUES (?)";
+
+        try(PreparedStatement statement = connection.prepareStatement(INSERT);){
+            statement.setString(1, item.getName());
+            statement.execute();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return 0;
+
+        //código anterior
+ /*       try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO items (name_item, quantity_item, description_item) VALUES (item.name, item.quantity, item.description)");
         }
         catch(SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    //  necessário testar
-    public static boolean itemNameExists(String itemName) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT (*) FROM items WHERE id_name = searchName");
-        if (resultSet.next() == false) {
-            return false;
-        } else {
-            do {
-                return true;
-            } while (resultSet.next());
-        }
-    }
-
-    //  necessário testar
-    public static boolean itemIdExists(int itemId) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT (*) FROM items WHERE id_item = itemId");
-        if (resultSet.next() == false) {
-            return false;
-        } else {
-            do {
-                return true;
-            } while (resultSet.next());
-        }
+        }*/
     }
 
 
