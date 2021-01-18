@@ -1,7 +1,7 @@
 package app.models;
 
 /**
- * Class for the Items table of the database
+ * Represents an item available/possibly available to sell/send in the company
  */
 public class ItemClass implements Item {
     int id;
@@ -10,12 +10,12 @@ public class ItemClass implements Item {
     private int quantity;
 
     /**
-     * Item class constructor
+     * Creates a new item object
      *
-     * @param id            int
-     * @param name          String
-     * @param description   String
-     * @param quantity      int
+     * @param id  item's Id
+     * @param name item's name
+     * @param description item's description
+     * @param quantity item's stock
      */
     public ItemClass(int id, String name, String description, int quantity) {
         this.id = id;

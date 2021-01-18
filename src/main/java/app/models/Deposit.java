@@ -3,20 +3,23 @@ package app.models;
 public interface Deposit {
 
     /**
-     * Método que mostra o ID do depósito.
-     * @return
+     * Get the deposit's Id
+     *
+     * @return Id
      */
     int getId();
 
     /**
-     * Método que mostra o ID do Item no depósito.
-     * @return
+     * Get the specific deposit's item
+     *
+     * @return item
      */
     Item getItem();
 
     /**
-     * Método que mostra a quantidade do Item depositado.
-     * @return
+     * Get the specific deposit's quantity
+     *
+     * @return quantity
      */
     int getQuantity();
 }
