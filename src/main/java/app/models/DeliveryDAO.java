@@ -1,11 +1,7 @@
 package app.models;
 
 import app.controllers.Warehouse;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +16,23 @@ public class DeliveryDAO {
 
     // GET/Delivey - Método que executa uma busca à tabele delevery  e delevery_items, da base de dados, retornando
     // todas as entregas e respetivos items que fazem parte da entrega
-    public static void getDeliveries(Warehouse warehouse) {
+    public static void getDeliveries(List<Delivery> deliveryList) {
+
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSetDelivery = statement.executeQuery("SELECT * FROM delivery");
+            while (resultSetDelivery.next()) {
+                int idDelivery = resultSetDelivery.getInt(1);
+                String place = resultSetDelivery.getString(2);
+                Delivery delivery = new DeliveryClass(idDelivery, place);
+                deliveryList.add(delivery);
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+
 /*
         //List<DeliveryItems> deliveryItems = new ArrayList<>();
         //INSERT INTO persons (lastname, firstname) VALUES ('Smith', 'John') RETURNING id;
@@ -58,5 +70,20 @@ public class DeliveryDAO {
 */
     }
 
-    public static void insertDelivery() { }
+
+    //POST/Delivery Método que insere uma nova encomenda dentro da na base de dados, na tabela delivery
+    public static int insertDelivery(String place) {
+        String INSERT = "INSERT INTO delivery (name_place) VALUES (?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT);
+            statement.setString(1, place);
+            statement.execute();
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
 }

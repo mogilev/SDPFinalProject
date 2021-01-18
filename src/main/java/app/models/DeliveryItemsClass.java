@@ -10,8 +10,6 @@ public class DeliveryItemsClass implements DeliveryItems{
         this.quantity = quantity;
     }
 
-
-
     public Item getItem() {
         return item;
     }
