@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Classe que faz a ligação (DAO - Data Access Object) à Base de Dados Postgres, na tabela items
+/**
+ * Class that makes the connection (DAO - Data Access Object) to the Postgres Database, in the items table
+ */
 public class ItemDAO extends ConnectionDAO {
     protected static Connection connection;
 
@@ -76,7 +78,13 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, através do Id
+    /**
+     * GET/Item/1
+     * Method that queries the items table, and returns the specific item, by Id
+     *
+     * @param itemsList     List of items that receive de information
+     * @param searchId      specify Id for search item
+     */
     public static void getItemById(List<Item> itemsList, int searchId) {
 
         try {
@@ -105,7 +113,13 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // GET/Item/1 Método que faz uma consulta à tabela items, e retorna o item especifico, através do Id
+    /**
+     * GET/Item/#
+     * Method that queries the items table, and returns the specific item, by name
+     *
+     * @param itemsList     List of items that receive de information
+     * @param searchName    name of the specify item to search
+     */
     public static void getItemByName(List<Item> itemsList, String searchName) {
 
         try {
@@ -132,17 +146,15 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    //
-
     /**
      * PUT/Items
-     * Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
+     * Method that changes information (quantity or description) of a certain item, in the Item table, by a given Id
      *
-     * @param   item    information that will be updated in the item
-     * @param   option  option to update:
-     *                  3 - updates quantity of the item
-     *                  4 - updates the item description
-     * @return  int     to check the method beaver
+     * @param   item        information that will be updated in the item
+     * @param   option      option to update:
+     *                      3 - updates quantity of the item
+     *                      4 - updates the item description
+     * @return  int         to check the method beaver
      */
     public static int updateItem(Item item, int option) {
         String id = String.valueOf(item.getId());
@@ -176,7 +188,13 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // POST/Item Método que faz o insert na base de dados de um novo item, na tabela item
+    /**
+     * POST/Item
+     * Method that inserts into the database a new item, in the Item table
+     *
+     * @param item      object with the information of the item
+     * @return int      0 to method control
+     */
     public static int insertItem(Item item) {
         String INSERT = "INSERT INTO items (name_item, quantity_item, description_item) VALUES (?, ?, ?)";
         String name = item.getName();
@@ -196,7 +214,12 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // DELET/Item Método que apaga um determinado item na tabela item da base de dados, atravez de um dado id
+    /**
+     * DELETE/Item
+     * Method that deletes a particular item in the Item table of the database, through a given id
+     *
+     * @param item      item that will be deleted form database
+     */
     public static void deleteItem(Item item) {
         try {
             Statement statement = connection.createStatement();
