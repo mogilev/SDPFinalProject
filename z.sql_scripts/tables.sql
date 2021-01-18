@@ -5,17 +5,10 @@ create table items (
     description_item varchar (50)
 );
 
-create table place (
-    id_place SERIAL PRIMARY KEY,
-    name_place varchar (50) UNIQUE NOT NULL
-);
-
 create table delivery (
     id_delivery SERIAL PRIMARY KEY,
-    id_place INT NOT NULL,
+    name_place varchar (50) NOT NULL
 
-    FOREIGN KEY (id_place)
-        REFERENCES place (id_place)
 );
 
 create table delivery_items (

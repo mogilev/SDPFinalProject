@@ -1,5 +1,7 @@
 package app.views;
 
+import app.controllers.Warehouse;
+import app.controllers.WarehouseClass;
 import app.models.Data;
 
 import javax.json.Json;
@@ -12,66 +14,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/delivery/*")
+@WebServlet("/delivery")
 public class DeliveryServlet extends HttpServlet {
+    Warehouse warehouse = new WarehouseClass();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); // TODO: 1/11/2021
+        // TODO
 
-        Data data = new Data("doGet", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); // TODO
+         // TODO
 
-        Data data = new Data("doPost", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");  // TODO
-
-        Data data = new Data("doPut", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
+        // TODO
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); // TODO
-
-        Data data = new Data("doDelete", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();
+        warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
     }
+
 }

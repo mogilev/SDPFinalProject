@@ -46,7 +46,6 @@ public class WarehouseClass implements Warehouse {
             DeliveryDAO deliveryDao = new DeliveryDAO(connection);
    //       if (deliveryDao.deliveryExists)
 
-
         }
         else{
             jSonSingleOutputSender(resp, "Nome", "item inexistente!");

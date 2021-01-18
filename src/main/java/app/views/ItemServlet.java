@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 
 @WebServlet("/items/*")
 public class ItemServlet extends HttpServlet {
@@ -27,24 +28,6 @@ public class ItemServlet extends HttpServlet {
         Warehouse warehouse = new WarehouseClass();
         String pathInfo = req.getPathInfo();
 
- /*       ConnectionDAO cdao = new ConnectionDAO();
-        try{
-            Connection connection = cdao.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM items");
-            while(resultSet.next()){
-                System.out.println(resultSet.getInt(1));
-                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-                jsonBuilder.add("name", "Sucesso");
-                jsonBuilder.add("value", resultSet.getInt(1));
-
-                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-                jsonWriter.writeObject(jsonBuilder.build());
-                jsonWriter.close();
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }*/
 
         if (!isInteger(pathInfo)) {
             switch (pathInfo) {
@@ -61,43 +44,6 @@ public class ItemServlet extends HttpServlet {
             commandGetItem(warehouse, resp, itemId);
         }
 
-/*
-        // bloco de codigo de teste, antigo
-        resp.setContentType("application/json");
-        String urInfo = req.getRequestURI();
-        String contextPath = req.getContextPath();
-        String servletPath = req.getServletPath();
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("urInfo", urInfo);
-        jsonBuilder.add("contextPath", contextPath);
-        jsonBuilder.add("servletPath", servletPath);
-        jsonBuilder.add("pathInfo", pathInfo);
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();*/
-
-/*        resp.setContentType("application/json"); // ligaçao à bd testada com sucesso, manter este bloco de código enquanto por backup
-        DatabaseConnectionManager dcm = new DatabaseConnectionManager("sdp_db:5432",
-                "amv_transports", "postgres", "sdp");
-        try{
-            Connection connection = dcm.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM items");
-            while(resultSet.next()){
-                System.out.println(resultSet.getInt(1));
-                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-                jsonBuilder.add("name", "Sucesso");
-                jsonBuilder.add("value", resultSet.getInt(1));
-
-                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-                jsonWriter.writeObject(jsonBuilder.build());
-                jsonWriter.close();
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }*/
     }
 
 
@@ -106,20 +52,10 @@ public class ItemServlet extends HttpServlet {
 
         Warehouse warehouse = new WarehouseClass();
         String itemName = req.getParameter("name");
+        itemName.toLowerCase();
 
         commandCreateItem(warehouse, resp, itemName);
 
-        /*resp.setContentType("application/json");
-
-        Data data = new Data("doPost", 42.0);
-
-        JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-        jsonBuilder.add("name", data.getName());
-        jsonBuilder.add("value", data.getValue());
-
-        JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-        jsonWriter.writeObject(jsonBuilder.build());
-        jsonWriter.close();*/
     }
 
 
@@ -128,6 +64,7 @@ public class ItemServlet extends HttpServlet {
         Warehouse warehouse = new WarehouseClass();
         String pathInfo = req.getPathInfo();
         String itemComment = req.getParameter("description");
+        itemComment.toLowerCase();
         commandUpdateItem(warehouse, resp, pathInfo, itemComment);
 
     }
@@ -155,21 +92,11 @@ public class ItemServlet extends HttpServlet {
 
 
     private static void commandGetItemCollection(Warehouse warehouse, HttpServletResponse resp, boolean stock) {
-       //     List<Item> itemsList = warehouse.getItems(bool);
-       //     jsonSender(itemsList);
+
         warehouse.buildItemsList(stock);
         if (warehouse.getItemsList().isEmpty()){
             warehouse.jSonSingleOutputSender(resp,"error","no items found!");
-            //  à partida o metodo anterior resolve este bloco try
-/*            try {
-                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-                jsonBuilder.add("error", "no items found!");
-                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-                jsonWriter.writeObject(jsonBuilder.build());
-                jsonWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
+
         }
         else {
             try {
@@ -187,39 +114,19 @@ public class ItemServlet extends HttpServlet {
     private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) { // TODO não parece ser necessário no enunciado, confirmar
         if(!warehouse.itemIdExists(itemId)) {
             warehouse.jSonSingleOutputSender(resp,String.valueOf(itemId),"item not found!");
-            //  à partida o metodo anterior resolve este bloco try
-/*            try {
-                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-                jsonBuilder.add(String.valueOf(itemId), "item not found!");
-                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-                jsonWriter.writeObject(jsonBuilder.build());
-                jsonWriter.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }*/
+
         }
         else {}
     }
 
 
     private static void commandCreateItem(Warehouse warehouse, HttpServletResponse resp, String itemName){
-        if (true){ //!itemName.isBlank()
+        if (true){ //!itemName.isBlank() //TODO atenção a este método, não corrigir sem testar
             warehouse.createItem(resp, itemName);
         }
         else{
             warehouse.jSonSingleOutputSender(resp,"Nome","dado obrigatório do item em falta");
-/*            try {
 
-                JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-                jsonBuilder.add("Nome", "dado obrigatório do item em falta");
-                JsonWriter jsonWriter = Json.createWriter(resp.getWriter());
-                jsonWriter.writeObject(jsonBuilder.build());
-                jsonWriter.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }*/
         }
     }
 

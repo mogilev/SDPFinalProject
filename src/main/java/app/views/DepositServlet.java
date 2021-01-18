@@ -29,6 +29,7 @@ import java.io.IOException;
 
             Warehouse warehouse = new WarehouseClass();
             String pathInfo = req.getParameter("itemId");
+            pathInfo.toLowerCase();
             String value = req.getParameter("quantity");
             commandCreateDeposit(warehouse, resp, pathInfo, value);
         }
