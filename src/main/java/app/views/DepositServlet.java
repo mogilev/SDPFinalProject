@@ -2,11 +2,7 @@ package app.views;
 
 import app.controllers.Warehouse;
 import app.controllers.WarehouseClass;
-import app.models.Data;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

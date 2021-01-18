@@ -7,109 +7,124 @@ import app.models.Item;
 
 import javax.json.JsonArrayBuilder;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Represents the controller of the API
+ * Applies project's business rules
+ */
 public interface Warehouse {
 
     /**
-     * Estabelece conexão com a base de dados.
+     * Establishes connection with the Database
+     *
+     * @exception SQLException when connection fails
      */
     void daoConnection();
 
     /**
-     * Elimina um determinado item, caso nunca tenha sido registado um depósito ou entrega com este.
-     * @param warehouse
-     * @param resp
-     * @param i
+     * Deletes an Item
+     *
+     * @param warehouse A Warehouse object
+     * @param resp #HttpServletResponse type used to send http response
+     * @param i Id of the element to delete
      */
-    void deleteItem(Warehouse warehouse, HttpServletResponse resp,int i);
+    void deleteItem(Warehouse warehouse, HttpServletResponse resp, int i);
 
     /**
-     * Verifica existência de um Item na Base de Dados pelo ID.
-     * @param itemId
-     * @return
+     * Confirms if an element with a certain Id exists in the Database.
+     *
+     * @param itemId id of the item to check
+     * @return true if exists, otherwise false
      */
     boolean itemIdExists(int itemId);
 
     /**
-     * Verifica existência de Item na Base de Dados pelo nome.
-     * @param itemId
-     * @return
+     * Confirms if an item with a certain name exists in the Database.
+     * @param itemName name of the item to check
+     * @return true if exists, otherwise false
      */
-    boolean itemNameExists(String itemId);
+    boolean itemNameExists(String itemName);
 
     /**
-     * Adiciona novo Item.
-     * @param resp
-     * @param itemName
+     * Adds a new item
+     * @param resp HttpServletResponse type used to send http response
+     * @param itemName name of the item to create
      */
     void createItem(HttpServletResponse resp, String itemName);
 
     /**
-     * Faz o update na descrição do Item.
-     * @param warehouse
-     * @param resp
-     * @param itemId
-     * @param itemDescription
+     * Update item's description
+     * @param warehouse Warehouse object
+     * @param resp HttpServletResponse type used to send http response
+     * @param itemId id of the item
+     * @param itemDescription new description
      */
     void updateItem(Warehouse warehouse, HttpServletResponse resp, int itemId, String itemDescription);
 
     /**
-     * Cria uma Lista de Items.
-     * @param bool
+     * Populates the Warehouse items list
+     * information saved in the database
+     * @param bool true populates only with items whose stock >0, false populates with all items in the database
      */
     void buildItemsList(boolean bool);
 
-    /**
-     * ??????? Cria um JSON ?????????????????????????????????????
-     * @param resp
-     * @param key
-     * @param value
-     */
-    void jSonSingleOutputSender(HttpServletResponse resp, String key, String value);
+
 
     /**
-     * Método que cria um depósito de item com a quantidade indicada.
-     * @param warehouse
-     * @param resp
-     * @param itemId
-     * @param quantity
+     * Creates Deposit object
+     * @param warehouse Warehouse object
+     * @param resp HttpServletResponse type used to send http response
+     * @param itemId item tha will receive the deposit
+     * @param quantity quantity that will be deposited
      */
     void createDeposit(Warehouse warehouse,HttpServletResponse resp, int itemId, int quantity);
 
 
-    //  Listas
+    //  Lists
 
     /**
-     * Método que retorna uma lista com os Items existentes.
-     * @return
+     * Gets the deposits list
+     * @return itemsList
      */
     List<Item> getItemsList();
 
     /**
-     * Método que retorna uma lista com os depósitos realizados em cada Item.
-     * @return
+     * Gets the deposits list
+     * @return depositsList
      */
     List<Deposit> getDepositsList();
 
     /**
-     * Método que retorna uma lista com as entregas registadas.
-     * @return
+     * Gets the deliveries list
+     * @return deliveriesList
      */
     List<Delivery> getDeliveriesList();
 
 
-    //  Criação de Json's
+    //  Json's
 
     /**
-     * Método que cria um JSON com os Items registados.
-     * @return
+     * Creates and sends a Json file
+     * Used to send error responses (no item, no delivery,...)
+     * @param resp HttpServletResponse type used to send http response
+     * @param key json key to be sent
+     * @param value json value to be sent
+     */
+    void jSonSingleOutputSender(HttpServletResponse resp, String key, String value);
+
+    /**
+     * Creates JSON file with the items collection
+     * Collection may be total items or only items with stock
+     * @return a json file
      */
     JsonArrayBuilder jsonItemsCollectionSender();
 
     /**
-     * Método que cria um JSON com as entregas registadas.
-     * @return
+     * Creates JSON file with the deliveries collection
+     * #not implemented
+     * @return a json file
      */
     JsonArrayBuilder jsonDeliveriesCollectionSender();
 

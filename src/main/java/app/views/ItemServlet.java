@@ -2,11 +2,8 @@ package app.views;
 
 import app.controllers.Warehouse;
 import app.controllers.WarehouseClass;
-import app.models.ConnectionDAO;
-import app.models.Data;
 
 import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Locale;
 
 @WebServlet("/items/*")
 public class ItemServlet extends HttpServlet {
