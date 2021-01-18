@@ -227,9 +227,11 @@ public class ItemDAO extends ConnectionDAO {
      * @exception   Error     SQL statement
      */
     public static void deleteItem(Item item) {
+        String id = String.valueOf(item.getId());
+
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM items WHERE id_item = item.id");
+            statement.executeUpdate("DELETE FROM items WHERE id_item = " + id);
         }
         catch(SQLException e) {
             e.printStackTrace();
