@@ -12,7 +12,7 @@ public class DepositClass implements Deposit{
     /**
      * Creates a new deposit with an Id, the item and specific quantity to be deposited
      *
-     * @param id
+     * @param id of the delivery
      * @param item item that'll receive the deposit
      * @param quantity to be deposited
      */
