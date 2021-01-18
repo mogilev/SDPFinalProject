@@ -9,18 +9,25 @@ public class ItemDAO extends ConnectionDAO {
     protected static Connection connection;
 
 
-/**
- * @param connection
- *
- *
-* */
+    /**
+     * Class ItemDAO constructor
+     * 
+     * @param connection    provides a connection
+     */
     public ItemDAO(Connection connection) { // construtor da classe
         super();
         this.connection = connection;
     }
 
 
-    // GET/item Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
+    //
+
+    /**
+     * GET/item
+     * Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
+     *
+     * @param itemsList
+     */
     public static void getItemsCollection(List<Item> itemsList) {
 
         try {
@@ -42,9 +49,13 @@ public class ItemDAO extends ConnectionDAO {
         }
     }
 
-
-    // GET/Item/Stock Método que faz uma consulta à tabela items, e retorna a lista de items que têm stock > 0
-    public static void getItemsStock(List<Item> itemsList) {
+    /**
+     * GET/Item/Stock
+     * Método que faz uma consulta à tabela items, e retorna a lista de items que têm stock > 0
+     *
+     * @param itemsList List of items
+     */
+    public static void getItemsStock(List<Item> itemsList) { //
 
         try {
             Statement statement = connection.createStatement();
@@ -121,7 +132,18 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    // PUT/Items Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
+    //
+
+    /**
+     * PUT/Items
+     * Método que altera informações (quantidade ou descrição) de um certo item, na tabela item, para um dado Id
+     *
+     * @param   item    information that will be updated in the item
+     * @param   option  option to update:
+     *                  3 - updates quantity of the item
+     *                  4 - updates the item description
+     * @return  int     to check the method beaver
+     */
     public static int updateItem(Item item, int option) {
         String id = String.valueOf(item.getId());
 
