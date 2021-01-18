@@ -1,17 +1,18 @@
 package app.models;
 
 /**
- * Class of objects for the items_table
+ * Represents one item of an specific delivery
+ *
  */
 public class DeliveryItemsClass implements DeliveryItems{
     private Item item;
     private int quantity;
 
     /**
-     * Class constructor
+     * Creates a new delivery item object
      *
-     * @param item      object of items of ItemsClass
-     * @param quantity  int
+     * @param item item delivered
+     * @param quantity of the item delivered
      */
     public DeliveryItemsClass(Item item, int quantity) {
         this.item = item;

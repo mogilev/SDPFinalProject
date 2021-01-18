@@ -8,6 +8,7 @@ public class DeliveryClass implements Delivery {
     private String place;
     private List<DeliveryItems> deliveryItemsList;
 
+
     public DeliveryClass(int id, String place, List<DeliveryItems> deliveryItems) {
         this.id = id;
         this.place = place;

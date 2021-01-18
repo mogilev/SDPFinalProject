@@ -3,7 +3,7 @@ package app.models;
 public interface DeliveryItems {
 
     /**
-     * Método que retorna o Item presente na tabela de Entregas.
+     * Gets the item of the specific pair delivery item (item7quantity)
      * @return
      */
     Item getItem();

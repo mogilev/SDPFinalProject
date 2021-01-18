@@ -6,31 +6,32 @@ public interface Delivery {
 
     /**
      * Método que retorna o número da Entrega.
-     * @return the
+     * @return the delivery id
      */
     int getDeliveryId();
 
     /**
-     * Método que retorna o Local da Entrega.
-     * @return
+     * The receiver address of this delivery
+     * @return the address
      */
     String getPlace();
 
     /**
-     * Método que?????????????????
-     * @param place
+     * Changes the delivery's address
+     * @param place the address
      */
     void setPlace(String place);
 
     /**
-     * Método que retorna a Lista de Items para Entrega.
-     * @return
+     * Gets the items (and its quantity) of the delivery
+     * @return the deliveriesList
      */
     List<DeliveryItems> getDeliveryItemsList();
 
     /**
-     * Método que cria Lista de Items para Entrega.
-     * @param deliveryItems
+     * Creates a new set of items/quantity associated with this delivery
+     * not implemented
+     * @param deliveryItems receives an object DeliveryItems
      */
     void setDeliveryItems(DeliveryItems deliveryItems);
 }
