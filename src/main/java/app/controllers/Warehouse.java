@@ -81,7 +81,7 @@ public interface Warehouse {
      *
      * @param warehouse Warehouse object
      * @param resp HttpServletResponse type used to send http response
-     * @param itemId item tha will receive the deposit
+     * @param itemId item that will receive the deposit
      * @param quantity quantity that will be deposited
      */
     void createDeposit(Warehouse warehouse,HttpServletResponse resp, int itemId, int quantity);
