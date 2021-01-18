@@ -5,10 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Class that makes the connection (DAO - Data Access Object) to the Postgres Database, for the delivery_items table
+ */
 public class DeliveryItemsDAO {
     protected static Connection connection;
 
 
+    /**
+     * Class DeliveryItemsDAO constructor
+     *
+     * @param connection    receive the connection to da database
+     */
     public DeliveryItemsDAO(Connection connection) { // construtor da classe
         super();
         this.connection = connection;

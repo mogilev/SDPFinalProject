@@ -14,7 +14,7 @@ public class ItemDAO extends ConnectionDAO {
     /**
      * Class ItemDAO constructor
      * 
-     * @param connection    provides a connection
+     * @param connection    provides a connection to database
      */
     public ItemDAO(Connection connection) { // construtor da classe
         super();
@@ -22,13 +22,12 @@ public class ItemDAO extends ConnectionDAO {
     }
 
 
-    //
-
     /**
      * GET/item
      * Method that queries the items table, and returns the complete collection of items in the database
      *
-     * @param itemsList     List of items to receive the SQl query
+     * @param       itemsList   List of items to receive the SQl query
+     * @exception   Error       on the SQL statement
      */
     public static void getItemsCollection(List<Item> itemsList) {
 
@@ -51,11 +50,13 @@ public class ItemDAO extends ConnectionDAO {
         }
     }
 
+
     /**
      * GET/Item/Stock
      * Method that queries the items table, and returns the list of items that have stock > 0
      *
-     * @param itemsList     List of items that receive the SQL query
+     * @param       itemsList   List of items that receive the SQL query
+     * @exception   Error       SQL statement
      */
     public static void getItemsStock(List<Item> itemsList) { //
 
@@ -82,8 +83,9 @@ public class ItemDAO extends ConnectionDAO {
      * GET/Item/1
      * Method that queries the items table, and returns the specific item, by Id
      *
-     * @param itemsList     List of items that receive de information
-     * @param searchId      specify Id for search item
+     * @param       itemsList   List of items that receive de information
+     * @param       searchId    specify Id for search item
+     * @exception   Error       SQL statement
      */
     public static void getItemById(List<Item> itemsList, int searchId) {
 
@@ -117,8 +119,9 @@ public class ItemDAO extends ConnectionDAO {
      * GET/Item/#
      * Method that queries the items table, and returns the specific item, by name
      *
-     * @param itemsList     List of items that receive de information
-     * @param searchName    name of the specify item to search
+     * @param       itemsList   List of items that receive de information
+     * @param       searchName  name of the specify item to search
+     * @exception   Error       SQL statement
      */
     public static void getItemByName(List<Item> itemsList, String searchName) {
 
@@ -150,11 +153,12 @@ public class ItemDAO extends ConnectionDAO {
      * PUT/Items
      * Method that changes information (quantity or description) of a certain item, in the Item table, by a given Id
      *
-     * @param   item        information that will be updated in the item
-     * @param   option      option to update:
-     *                      3 - updates quantity of the item
-     *                      4 - updates the item description
-     * @return  int         to check the method beaver
+     * @param       item        information that will be updated in the item
+     * @param       option      option to update:
+     *                          3 - updates quantity of the item
+     *                          4 - updates the item description
+     * @return      int         check method
+     * @exception   Error       SQL statement
      */
     public static int updateItem(Item item, int option) {
         String id = String.valueOf(item.getId());
@@ -182,7 +186,6 @@ public class ItemDAO extends ConnectionDAO {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-
         }
         return 0;
     }
@@ -192,8 +195,10 @@ public class ItemDAO extends ConnectionDAO {
      * POST/Item
      * Method that inserts into the database a new item, in the Item table
      *
-     * @param item      object with the information of the item
-     * @return int      0 to method control
+     * @param       item        object with the information of the item
+     * @return      int         method control
+     * @exception   Error       SQL statement
+     *                          connection
      */
     public static int insertItem(Item item) {
         String INSERT = "INSERT INTO items (name_item, quantity_item, description_item) VALUES (?, ?, ?)";
@@ -218,7 +223,8 @@ public class ItemDAO extends ConnectionDAO {
      * DELETE/Item
      * Method that deletes a particular item in the Item table of the database, through a given id
      *
-     * @param item      item that will be deleted form database
+     * @param       item      item that will be deleted form database
+     * @exception   Error     SQL statement
      */
     public static void deleteItem(Item item) {
         try {

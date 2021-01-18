@@ -5,12 +5,12 @@
   <nodes />
   <notes />
   <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="1073.0" y="428.0" />
+  <settings layout="Hierarchic Group" zoom="0.4014336917562724" x="1105.5" y="1096.0" />
   <SelectedNodes />
   <Categories>
+    <Category>Fields</Category>
     <Category>Constructors</Category>
     <Category>Methods</Category>
-    <Category>Fields</Category>
     <Category>Properties</Category>
     <Category>Inner Classes</Category>
   </Categories>
