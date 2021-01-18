@@ -19,7 +19,7 @@ public class DepositDAO {
 
     /**
      * POST/Deposit and PUT/Items
-     * Method that inserts into a deposit database, updating the quantity in the items table
+     * Method that inserts a deposit in the database into Deposit table, and updating the quantity in the Items table
      *
       * @param deposit      receive the an Deposit object
      */

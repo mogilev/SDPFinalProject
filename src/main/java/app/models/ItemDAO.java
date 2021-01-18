@@ -24,9 +24,9 @@ public class ItemDAO extends ConnectionDAO {
 
     /**
      * GET/item
-     * Método que faz uma consulta à tabela items, e retorna a coleção completa de items da base de dados
+     * Method that queries the items table, and returns the complete collection of items in the database
      *
-     * @param itemsList
+     * @param itemsList     List of items to receive the SQl query
      */
     public static void getItemsCollection(List<Item> itemsList) {
 
@@ -51,9 +51,9 @@ public class ItemDAO extends ConnectionDAO {
 
     /**
      * GET/Item/Stock
-     * Método que faz uma consulta à tabela items, e retorna a lista de items que têm stock > 0
+     * Method that queries the items table, and returns the list of items that have stock > 0
      *
-     * @param itemsList List of items
+     * @param itemsList     List of items that receive the SQL query
      */
     public static void getItemsStock(List<Item> itemsList) { //
 

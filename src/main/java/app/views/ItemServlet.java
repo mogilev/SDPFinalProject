@@ -43,7 +43,6 @@ public class ItemServlet extends HttpServlet {
             int itemId = Integer.parseInt(pathInfo); // penso que não seja necessário consultar um item individualmente
             commandGetItem(warehouse, resp, itemId);
         }
-
     }
 
 
@@ -55,7 +54,6 @@ public class ItemServlet extends HttpServlet {
         itemName.toLowerCase();
 
         commandCreateItem(warehouse, resp, itemName);
-
     }
 
 
@@ -66,7 +64,6 @@ public class ItemServlet extends HttpServlet {
         String itemComment = req.getParameter("description");
         itemComment.toLowerCase();
         commandUpdateItem(warehouse, resp, pathInfo, itemComment);
-
     }
 
 
@@ -76,7 +73,6 @@ public class ItemServlet extends HttpServlet {
         String pathInfo = req.getPathInfo();
         commandDeleteItem(warehouse, resp, pathInfo);
     }
-
 
 
     public static boolean isInteger(String str) {
@@ -129,6 +125,7 @@ public class ItemServlet extends HttpServlet {
 
         }
     }
+
 
     private static void commandUpdateItem(Warehouse warehouse, HttpServletResponse resp, String pathInfo,String itemComment) {
 
