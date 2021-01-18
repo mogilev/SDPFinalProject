@@ -6,14 +6,23 @@ import static app.models.ItemDAO.updateItem;
 public class DepositDAO {
     protected static Connection connection;
 
-
-    public DepositDAO(Connection connection) { // construtor da classe
+    /**
+     * Class DepositDAO constructor
+     *
+     * @param connection    receive the connection to da database
+     */
+    public DepositDAO(Connection connection) {
         super();
         this.connection = connection;
     }
 
 
-    // POST/Item Método que faz o insert na base de dados de um deposito, actualizando a quantidade na tabela de items
+    /**
+     * POST/Deposit and PUT/Items
+     * Method that inserts into a deposit database, updating the quantity in the items table
+     *
+      * @param deposit      receive the an Deposit object
+     */
     public static void insertDeposit(Deposit deposit) {
         String INSERT = "INSERT INTO deposits (id_item, quantity_deposits) VALUES (?, ?)";
         ItemDAO itemDAO = new ItemDAO(connection);
@@ -23,7 +32,7 @@ public class DepositDAO {
             statement.setInt(1, deposit.getItem().getId());
             statement.setInt(2, deposit.getQuantity());
             statement.execute();
-            itemDAO.updateItem(deposit.getItem(), 3); // PUT/Items update quantidade na tabela de items
+            itemDAO.updateItem(deposit.getItem(), 3); // updating the quantity in the items table
         }
         catch(SQLException e) {
             e.printStackTrace();
