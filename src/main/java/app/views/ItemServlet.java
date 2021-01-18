@@ -154,7 +154,7 @@ public class ItemServlet extends HttpServlet {
      * @param resp      response
      * @param itemId    id of the item to get
      */
-    private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) { // TODO não parece ser necessário no enunciado, confirmar
+    private static void commandGetItem(Warehouse warehouse, HttpServletResponse resp, int itemId) {
         if(!warehouse.itemIdExists(itemId)) {
             warehouse.jSonSingleOutputSender(resp, String.valueOf(itemId),"item not found!");
         }
@@ -170,7 +170,7 @@ public class ItemServlet extends HttpServlet {
      * @param itemName  name of the item
      */
     private static void commandCreateItem(Warehouse warehouse, HttpServletResponse resp, String itemName){
-        if(true){ //!itemName.isBlank() //TODO atenção a este método, não corrigir sem testar
+        if(true){ //!itemName.isBlank() //método //!itemName.isBlank() com erro
             warehouse.createItem(resp, itemName);
         }
         else{
@@ -208,6 +208,7 @@ public class ItemServlet extends HttpServlet {
      * @param pathInfo      path information
      */
     private void commandDeleteItem(Warehouse warehouse, HttpServletResponse resp, String pathInfo) {
+
         if(isInteger(pathInfo)) {
             pathInfo = pathInfo.substring(1);
             int itemId = Integer.parseInt(pathInfo);

@@ -112,8 +112,8 @@ public class DepositServlet extends HttpServlet {
             int quantity = Integer.parseInt(value);
             warehouse.createDeposit(warehouse, resp, itemId, quantity);
             }
-            else {
-                warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
+        else {
+            warehouse.jSonSingleOutputSender(resp, "erro", "opção indisponível");
             }
         }
 

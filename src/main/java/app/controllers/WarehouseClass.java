@@ -41,20 +41,21 @@ public class WarehouseClass implements Warehouse {
 
     @Override
     public void deleteItem(Warehouse warehouse, HttpServletResponse resp, int itemId) {
-
+    // não respeita condição de só se poder apagar item caso nunca tenha recebido depósito ou feito entrega
         if (itemIdExists(itemId)){
-            DeliveryDAO deliveryDao = new DeliveryDAO(connection);
-   //       if (deliveryDao.deliveryExists)
-
+            ItemDAO itemDAO = new ItemDAO(connection);
+            itemDAO.getItemById(itemsList, itemId);
+            Item item = getItemsList().get(0);
+            itemDAO.deleteItem(item);
         }
         else{
             jSonSingleOutputSender(resp, "Nome", "item inexistente!");
         }
-    } // TODO - aqui ficarão as regras de negócio (segundo o brainstorm na aula 05/01/2021 - 55min)
+    }
 
 
     @Override
-    public boolean itemIdExists(int itemId) { // confirmar este método
+    public boolean itemIdExists(int itemId) {
         ItemDAO itemDAO = new ItemDAO(connection);
         itemDAO.getItemById(itemsList, itemId);
         if (this.getItemsList().isEmpty()){
