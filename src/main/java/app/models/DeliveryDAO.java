@@ -14,7 +14,7 @@ public class DeliveryDAO {
         this.connection = connection;
     }
 
-    // GET/Delivey - Método que executa uma busca à tabele delevery  e delevery_items, da base de dados, retornando
+    // GET/Delivey - Método que executa uma busca à tabele delivery  e delivery_items, da base de dados, retornando
     // todas as entregas e respetivos items que fazem parte da entrega
     public static void getDeliveries(List<Delivery> deliveryList) {
 

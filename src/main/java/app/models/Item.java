@@ -2,18 +2,39 @@ package app.models;
 
 public interface Item {
 
-    int getId();  // Retorna Id do Item
+    /**
+     * Método que retorna o Id do Item.
+     * @return
+     */
+    int getId();
 
+    /**
+     * Método que retorna o Nome do Item.
+     * @return
+     */
+    String getName();
 
-    String getName();  // Retorna o nome do Item
+    /**
+     * Método que retorna a Descrição do Item.
+     * @return
+     */
+    String getDescription();
 
-    String getDescription();  // Retorna a descrição do Item
+    /**
+     * Método que altera a descrição de Item.
+     * @param description
+     */
+    void setDescription(String description);
 
-    void setDescription(String description);  // Altera a descrição do Item
+    /**
+     * Método que retorna a quantidade em Stock do Item.
+     * @return
+     */
+    int getQuantity();
 
-    int getQuantity(); // Retorna quantidade em stock do Item
-
-    void setQuantity(int quantity);  // altera a quantidade do item
-
-
+    /**
+     * Método que altera a quantidade do Item.
+     * @param quantity
+     */
+    void setQuantity(int quantity);
 }
