@@ -1,7 +1,8 @@
 package app.models;
 
 /**
- * Class for the Deposits table of the Database
+ * Represents a deposit
+ *
  */
 public class DepositClass implements Deposit{
     int id;
@@ -9,10 +10,11 @@ public class DepositClass implements Deposit{
     int quantity;
 
     /**
-     * Class constructor
-     * @param id        int
-     * @param item      object for items ItemClass
-     * @param quantity  int
+     * Creates a new deposit with an Id, the item and specific quantity to be deposited
+     *
+     * @param id
+     * @param item item that'll receive the deposit
+     * @param quantity to be deposited
      */
     public DepositClass(int id, Item item, int quantity) {
         this.id = id;

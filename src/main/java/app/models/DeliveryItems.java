@@ -3,14 +3,14 @@ package app.models;
 public interface DeliveryItems {
 
     /**
-     * Gets the item of the specific pair delivery item (item7quantity)
-     * @return
+     * Gets the item of the delivery
+     * @return the item
      */
     Item getItem();
 
     /**
-     * Método que retorna a quantidade de cada Item presente na tabela de entregas.
-     * @return
+     * Gets the quantity of items
+     * @return the quantity
      */
     int getQuantity();
 }

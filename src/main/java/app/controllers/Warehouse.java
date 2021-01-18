@@ -42,6 +42,7 @@ public interface Warehouse {
 
     /**
      * Confirms if an item with a certain name exists in the Database.
+     *
      * @param itemName name of the item to check
      * @return true if exists, otherwise false
      */
@@ -49,6 +50,7 @@ public interface Warehouse {
 
     /**
      * Adds a new item
+     *
      * @param resp HttpServletResponse type used to send http response
      * @param itemName name of the item to create
      */
@@ -56,6 +58,7 @@ public interface Warehouse {
 
     /**
      * Update item's description
+     *
      * @param warehouse Warehouse object
      * @param resp HttpServletResponse type used to send http response
      * @param itemId id of the item
@@ -66,6 +69,7 @@ public interface Warehouse {
     /**
      * Populates the Warehouse items list
      * information saved in the database
+     *
      * @param bool true populates only with items whose stock >0, false populates with all items in the database
      */
     void buildItemsList(boolean bool);
@@ -74,6 +78,7 @@ public interface Warehouse {
 
     /**
      * Creates Deposit object
+     *
      * @param warehouse Warehouse object
      * @param resp HttpServletResponse type used to send http response
      * @param itemId item tha will receive the deposit
@@ -86,18 +91,21 @@ public interface Warehouse {
 
     /**
      * Gets the deposits list
+     *
      * @return itemsList
      */
     List<Item> getItemsList();
 
     /**
      * Gets the deposits list
+     *
      * @return depositsList
      */
     List<Deposit> getDepositsList();
 
     /**
      * Gets the deliveries list
+     *
      * @return deliveriesList
      */
     List<Delivery> getDeliveriesList();
@@ -108,6 +116,7 @@ public interface Warehouse {
     /**
      * Creates and sends a Json file
      * Used to send error responses (no item, no delivery,...)
+     *
      * @param resp HttpServletResponse type used to send http response
      * @param key json key to be sent
      * @param value json value to be sent
@@ -117,6 +126,7 @@ public interface Warehouse {
     /**
      * Creates JSON file with the items collection
      * Collection may be total items or only items with stock
+     *
      * @return a json file
      */
     JsonArrayBuilder jsonItemsCollectionSender();
@@ -124,6 +134,7 @@ public interface Warehouse {
     /**
      * Creates JSON file with the deliveries collection
      * #not implemented
+     *
      * @return a json file
      */
     JsonArrayBuilder jsonDeliveriesCollectionSender();
