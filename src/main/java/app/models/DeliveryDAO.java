@@ -5,17 +5,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that makes the connection (DAO - Data Access Object) to the Postgres Database, to delivery table
+ */
 public class DeliveryDAO {
     protected static Connection connection;
 
 
+    /**
+     * Class DeliveryDAO constructor
+     *
+     * @param connection    receive connection to database
+     */
     public DeliveryDAO(Connection connection) { // construtor da classe
         super();
         this.connection = connection;
     }
 
-    // GET/Delivey - Método que executa uma busca à tabele delivery  e delivery_items, da base de dados, retornando
-    // todas as entregas e respetivos items que fazem parte da entrega
+    /**
+     * GET/Delivery
+     * Method that performs searches in tables delivery and delivery_items, returning all deliveries and respective
+     * items of the delivery
+     *
+     * @param       deliveryList    List of deliveries DeliveryClass
+     * @exception   Error           SQL statement
+     */
     public static void getDeliveries(List<Delivery> deliveryList) {
 
         try {
@@ -71,7 +85,14 @@ public class DeliveryDAO {
     }
 
 
-    //POST/Delivery Método que insere uma nova encomenda dentro da na base de dados, na tabela delivery
+    /**
+     * POST/Delivery
+     * Method that inserts a new order into the database, in the delivery table
+     *
+     * @param       place   receive local of the delivery
+     * @return      int     0 check method
+     * @exception   Error   SQL statement
+     */
     public static int insertDelivery(String place) {
         String INSERT = "INSERT INTO delivery (name_place) VALUES (?)";
 
