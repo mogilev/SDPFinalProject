@@ -12,7 +12,7 @@ public class DepositDAO {
     /**
      * Class DepositDAO constructor
      *
-     * @param connection    receive the connection to da database
+     * @param connection    receive the connection to the database
      */
     public DepositDAO(Connection connection) {
         super();
