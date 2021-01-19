@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 @WebServlet("/deposit")
 public class DepositServlet extends HttpServlet {
+
     Warehouse warehouse = new WarehouseClass();
 
     /**
