@@ -37,9 +37,13 @@ the api node.
 
 
 ### Languages and Tools
-The JAVA (15) API was developed on JetBrains INTELLIJ IDEA - ULTIMATE EDITION<br>
-[PlantUML](https://plantuml.com) was used for the diagrams(except the class diagram, made in INTELLIJ)<br>
-[Postman](https://www.postman.com) for testing the API.<br>
+- The [JAVA (JDK15)](https://www.java.com) API was developed on [JetBrains INTELLIJ IDEA - ULTIMATE EDITION](https://www.jetbrains.com/idea/)
+- [Docker](https://www.docker.com/) on WSL2
+- [Node.js](https://nodejs.org)
+- [PlantUML](https://plantuml.com) was used for the diagrams(except the class diagram, made in INTELLIJ)
+- [Postman](https://www.postman.com) for testing the API.<br><br>
+
+
 ### REST API's Operations
 
 | HTTP Method |                url                |        Param         |                            Op. Description                             |                 HTTP response code (OK)                 |    HTTP response code (NOK)     |   HTTP response code (NOK)    |
