@@ -1,0 +1,34 @@
+@startuml
+title Transport Management Application
+skinparam actorStyle Hollow
+skinparam backgroundcolor transparent
+skinparam TitleFontColor White
+skinparam ArrowColor reverse
+skinparam NodeFontColor white
+skinparam nodebordercolor white
+actor user #grey
+node "Developer Laptop" {
+  node "Docker Container - Database Server" <<Docker>> as db {
+    node "Database Server" <<Alpine>> {
+      database "Database" <<POSTGRES>> as pg #438dd5
+    }
+  }
+  node "Docker Container - REST API" <<Docker>> as rest {
+    node "Application Server" <<Wildfly 21>> {
+      rectangle "REST API" <<JAVA>> as restapi #438dd5
+    }
+  }
+  node "Web Server" <<INTELLIJ>> {
+    rectangle "Webpage" <<NODE.JS>> as nd #438dd5
+  }
+}
+
+
+
+nd <.> restapi #red:<font color=red><<JSON/HTTPS>>\n <font color=red>Makes API calls to
+restapi <.[#707070].> pg : <font color=grey><<JDBC>>\n<font color=grey>Reads from and writes to
+
+
+user <-l-> restapi #red:<font color=red><<JSON/HTTPS>>\n<font color=red>Makes API calls to
+nd <-l-> user #green: <font color=green>Delivers \n<font color=green>to the user's\n<font color=green> web browser
+@enduml

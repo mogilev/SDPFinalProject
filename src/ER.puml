@@ -1,0 +1,38 @@
+@startuml
+
+'hide the spot
+hide circle
+' avoid problems with angled crows feet
+skinparam linetype ortho
+skinparam backgroundcolor transparent
+skinparam ArrowColor reverse
+
+
+entity "items" as e01 {
+  **PK - id_item : int**
+  name_item : varchar {30},
+  quantity_item : int
+  description_item : varchar {50}
+}
+
+entity "deposits" as e02 {
+  **PK - id_deposits : int**
+  //FK - id_item : int//
+  quantity_deposits : int
+}
+
+entity "delivery_items" as e03 {
+  **//FK - id_delivery : int//**
+  //FK - id_item : int//
+  quantity_item : int
+}
+
+entity "delivery" as e04 {
+  **PK - id_delivery : int**
+  name_place varchar {50}
+}
+
+e01 "<font color=white>N "-d-- "<font color=white>N " e03
+e03 "<font color=white>N "- "<font color=white>    N" e04
+e01 "<font color=white>N "- "<font color=white>    N" e02
+@enduml
